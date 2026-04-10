@@ -1,0 +1,1134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>INZIRA MARKET - Authentic Rwandan Products</title>
+<meta name="description" content="Premium marketplace connecting Rwanda's farmers, artisans and makers directly to local and international buyers. No middlemen. Fair pay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--green-deep:#1B4332;--green-mid:#2D6A4F;--green-light:#52B788;--gold:#D4A017;--gold-light:#F0C040;--red:#E63946;--cream:#FDF8F0;--cream2:#F5EFE0;--charcoal:#1A1A2E;--grey:#6B7280;--white:#FFFFFF;--ff-d:'Playfair Display',Georgia,serif;--ff-b:'DM Sans',system-ui,sans-serif;--ff-m:'DM Mono',monospace;--ease:.35s cubic-bezier(.22,1,.36,1)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--ff-b);background:var(--cream);color:var(--charcoal);overflow-x:hidden}
+::selection{background:var(--green-light);color:var(--white)}
+img{max-width:100%;display:block}
+button{font-family:inherit;border:none;outline:none;background:none;cursor:pointer}
+a{text-decoration:none;color:inherit;cursor:pointer}
+input,select{font-family:inherit;outline:none}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--cream2)}
+::-webkit-scrollbar-thumb{background:var(--green-mid);border-radius:3px}
+
+/* Scroll Progress */
+#scrollProg{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--green-mid),var(--gold));z-index:10000;width:0;transition:none}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--charcoal);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s}
+#loader .flag{font-size:1rem;color:var(--cream);opacity:0;animation:fadeIn .6s .2s forwards;margin-bottom:1.2rem;font-family:var(--ff-b);letter-spacing:2px}
+#loader .logo{font-family:var(--ff-d);font-size:3.2rem;color:var(--white);clip-path:inset(0 100% 0 0);animation:clipReveal 1s .5s forwards}
+#loader .logo span{color:var(--gold)}
+#loader .tag{font-family:var(--ff-b);color:var(--grey);font-size:.85rem;letter-spacing:3px;text-transform:uppercase;opacity:0;transform:translateY(12px);animation:fadeUp .6s 1s forwards;margin-top:.6rem}
+#loader .bar-wrap{width:220px;height:2px;background:rgba(255,255,255,.1);margin-top:2rem;border-radius:2px;overflow:hidden}
+#loader .bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green-light),var(--gold));animation:fillBar 2.5s .8s forwards}
+#loader .pct{font-family:var(--ff-m);color:var(--gold);font-size:.75rem;margin-top:.6rem;opacity:0;animation:fadeIn .3s .8s forwards}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes clipReveal{to{clip-path:inset(0 0 0 0)}}
+@keyframes fillBar{to{width:100%}}
+
+/* Cinematic bars */
+.cbar{position:fixed;left:0;right:0;height:60px;background:var(--charcoal);z-index:9998;transition:transform .8s var(--ease) .1s}
+.cbar-t{top:0}.cbar-b{bottom:0}
+.cbar.hide-t{transform:translateY(-100%)}.cbar.hide-b{transform:translateY(100%)}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:9990;padding:0 3%;height:64px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(253,248,240,.82);transition:background .3s,box-shadow .3s}
+#nav.scrolled{background:rgba(253,248,240,.97);box-shadow:0 1px 12px rgba(0,0,0,.06)}
+#nav .logo{height:42px;display:flex;align-items:center;overflow:visible;transition:transform .3s var(--ease)}
+#nav .logo:hover{transform:scale(1.02)}
+#nav .logo svg{height:100%;width:auto;display:block}
+.logo-white{filter:brightness(0) invert(1)}
+.logo-tagline{font-family:var(--ff-b);font-size:7px;font-weight:600;letter-spacing:4px;color:var(--grey);text-transform:uppercase;margin-top:-2px;opacity:0.8}
+#nav .links{display:flex;gap:1.8rem;align-items:center}
+#nav .links a{font-size:.85rem;font-weight:500;color:var(--charcoal);position:relative;padding:4px 0}
+#nav .links a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1.5px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform var(--ease)}
+#nav .links a:hover::after{transform:scaleX(1)}
+#nav .acts{display:flex;gap:1.4rem;align-items:center}
+#nav .acts button:not(.btn-g):not(.btn-p){font-size:1.05rem;position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(45,106,79,0.06);color:var(--green-mid);transition:all var(--ease);border:1px solid rgba(45,106,79,0.1);padding:0}
+#nav .acts button:not(.btn-g):not(.btn-p):hover{background:var(--green-mid);color:#fff}
+.acts button .svg-ic{width:18px;height:18px}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:.55rem;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--ff-m);animation:popIn .3s;border:1.5px solid var(--cream)}
+@keyframes popIn{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.btn-p{background:var(--green-mid);color:#fff;height:28px;padding:0 14px;border-radius:50px;font-size:.65rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;transition:all .3s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 2px 8px rgba(0,0,0,.05);border:none}
+.btn-p:hover{background:var(--green-deep);transform:translateY(-3px) scale(1.02);box-shadow:0 6px 15px rgba(27,67,50,0.2)}
+.btn-p:active{transform:translateY(-1px) scale(.98)}
+
+.btn-g{border:1.5px solid var(--green-mid);color:var(--green-mid);height:28px;padding:0 14px;border-radius:50px;font-size:.65rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;transition:all .3s cubic-bezier(0.34,1.56,0.64,1);margin-left:0.5rem}
+.btn-g:hover{background:var(--green-mid);color:#fff;transform:translateY(-3px) scale(1.02);box-shadow:0 6px 15px rgba(45,106,79,0.15)}
+.btn-g:active{transform:translateY(-1px) scale(.98)}
+#hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:10}
+#hamburger span{width:22px;height:2px;background:var(--charcoal);transition:var(--ease)}
+
+/* Mobile nav drawer */
+#drawer{position:fixed;top:0;right:-100%;width:300px;height:100vh;background:var(--cream);z-index:9991;padding:80px 2rem 2rem;transition:right .4s var(--ease);box-shadow:-4px 0 20px rgba(0,0,0,.08)}
+#drawer.open{right:0}
+#drawer a{display:block;padding:12px 0;font-size:1.1rem;font-weight:500;border-bottom:1px solid var(--cream2)}
+#drawer .drawer-acts{margin-top:1.5rem;display:flex;flex-direction:column;gap:1.1rem}
+#drawer .btn-p,#drawer .btn-g{display:block;text-align:center;padding:10px;font-size:.85rem;width:100%}
+#drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:9989;opacity:0;pointer-events:none;transition:opacity .3s}
+#drawer-overlay.open{opacity:1;pointer-events:all}
+
+/* SPLIT TEXT */
+.split-txt{overflow:hidden;display:inline-block}
+.split-char{display:inline-block;transform:translateY(100%);transition:transform .8s var(--ease)}
+.show .split-char{transform:translateY(0)}
+
+/* STAGGERED REVEAL */
+.rev{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rev.show{opacity:1;transform:translateY(0)}
+.rev.stagger-parent > *{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rev.show.stagger-parent > *{opacity:1;transform:translateY(0)}
+
+/* GRID STAGGER */
+.pgrid > .pcard:nth-child(n){transition-delay:calc(0.05s * var(--i, 0))}
+
+/* CARD HOVER */
+.pcard{background:var(--white);border-radius:12px;overflow:hidden;position:relative;transition:transform .4s var(--ease),box-shadow .4s var(--ease);border:1px solid rgba(0,0,0,.03)}
+.pcard:hover{transform:translateY(-8px);box-shadow:0 12px 30px rgba(27,67,50,.08)}
+.pcard-img{height:200px;background:var(--cream2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pimg{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.pcard:hover .pimg{transform:scale(1.1)}
+
+/* SVG ICONS */
+.svg-ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+.acts button .svg-ic{width:18px;height:18px}
+
+/* FLOATING LABELS */
+.float-label{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);padding:8px 16px;border-radius:30px;font-size:.75rem;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.05)}
+</style>
+
+<style>
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:100px 5% 60px;background:var(--cream)}
+#hero::before{content:'';position:absolute;inset:0;background:rgba(253,248,240,0.65);z-index:1}
+#hero canvas{position:absolute;inset:0;z-index:2}
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-c{position:relative;z-index:3;text-align:center;max-width:820px}
+.trust-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.2);padding:6px 16px;border-radius:50px;font-size:.75rem;font-weight:600;color:var(--green-mid);margin-bottom:1.5rem}
+.hero-h1{font-family:var(--ff-d);font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.15;color:var(--charcoal);margin-bottom:1rem}
+.hero-h1 em{color:var(--gold);font-style:italic}
+.hero-h1 .char{display:inline-block;opacity:0;transform:translateY(55px) rotateX(-40deg);animation:charIn .7s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes charIn{to{opacity:1;transform:translateY(0) rotateX(0)}}
+.hero-sub{font-size:clamp(.9rem,1.8vw,1.1rem);color:var(--grey);max-width:540px;margin:0 auto 2rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero-btns .btn-p{padding:12px 32px;font-size:.9rem;border-radius:8px}
+.hero-btns .btn-g{padding:12px 32px;font-size:.9rem;border-radius:8px}
+.stats-bar{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;padding:1.2rem 0;border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06)}
+.stat-item{text-align:center}
+.stat-num{font-family:var(--ff-d);font-size:1.6rem;font-weight:700;color:var(--green-deep)}
+.stat-lab{font-size:.7rem;color:var(--grey);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.scroll-ind{margin-top:2rem;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.5}
+.scroll-ind span{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--grey)}
+.scroll-ind .line{width:1px;height:30px;background:var(--charcoal);animation:shrinkLine 1.5s infinite}
+@keyframes shrinkLine{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.3)}}
+
+/* Floating labels */
+.float-label{position:absolute;z-index:4;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);padding:8px 14px;border-radius:8px;font-size:.7rem;font-weight:600;box-shadow:0 2px 12px rgba(0,0,0,.06);animation:floatY 6s ease-in-out infinite}
+.fl-1{top:18%;left:8%}.fl-2{top:22%;right:8%}.fl-3{bottom:22%;left:10%}.fl-4{bottom:18%;right:10%}
+.fl-2{animation-delay:1.5s}.fl-3{animation-delay:3s}.fl-4{animation-delay:4.5s}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* TICKER */
+.ticker-wrap{background:var(--green-deep);padding:14px 0;overflow:hidden;position:relative}
+.ticker{display:flex;gap:0;animation:tickScroll 25s linear infinite;width:max-content}
+.ticker:hover{animation-play-state:paused}
+.ticker-item{flex-shrink:0;padding:6px 24px;color:var(--cream);font-size:.8rem;font-weight:500;white-space:nowrap;border-right:1px solid rgba(255,255,255,.1)}
+
+@keyframes tickScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION COMMON */
+.sec{padding:80px 5%}
+.sec-h{text-align:center;margin-bottom:3rem}
+.sec-h h2{font-family:var(--ff-d);font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--charcoal);margin-bottom:.6rem}
+.sec-h p{color:var(--grey);max-width:520px;margin:0 auto;font-size:.95rem;line-height:1.6}
+.sec-h .line{width:50px;height:3px;background:linear-gradient(90deg,var(--green-mid),var(--gold));margin:1rem auto 0;border-radius:2px}
+
+/* FILTER + SORT */
+.shop-controls{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+.filter-pills{display:flex;gap:.5rem;flex-wrap:wrap}
+.fpill{padding:7px 18px;border-radius:50px;font-size:.78rem;font-weight:600;background:var(--cream2);color:var(--charcoal);border:1px solid transparent;transition:all var(--ease);cursor:pointer}
+.fpill.active,.fpill:hover{background:var(--green-mid);color:#fff;border-color:var(--green-mid)}
+.sort-sel{padding:8px 14px;border-radius:8px;border:1px solid var(--cream2);font-size:.8rem;background:var(--white);cursor:pointer}
+
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+.pcard{background:var(--white);border-radius:12px;overflow:hidden;transition:transform var(--ease),box-shadow var(--ease);position:relative}
+.pcard:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.pcard-img{height:200px;display:flex;align-items:center;justify-content:center;background:var(--cream2);font-size:4rem;position:relative;overflow:hidden;transition:var(--ease)}
+.pcard:hover .pcard-img .emoji{transform:scale(1.08)}
+.pcard-img .emoji{transition:transform var(--ease)}
+.pcard-img .qv{position:absolute;bottom:10px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--charcoal);color:#fff;font-size:.7rem;padding:6px 14px;border-radius:6px;transition:all var(--ease);pointer-events:none}
+.pcard:hover .pcard-img .qv{opacity:1;transform:translateX(-50%) translateY(0)}
+.pcard-wish{position:absolute;top:10px;right:10px;z-index:3;width:30px;height:30px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:var(--ease);cursor:pointer}
+.pcard-wish.liked{color:var(--red)}
+.pcard-badge{position:absolute;top:10px;left:10px;z-index:3;padding:3px 10px;border-radius:4px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.pcard-badge.verified{background:rgba(82,183,136,.15);color:var(--green-mid)}
+.pcard-badge.new{background:rgba(240,192,64,.2);color:var(--gold)}
+.pcard-badge.top{background:rgba(230,57,70,.1);color:var(--red)}
+.pcard-body{padding:14px 16px 16px}
+.pcard-cat{font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-bottom:4px}
+.pcard-name{font-family:var(--ff-d);font-size:1rem;font-weight:600;margin-bottom:4px;line-height:1.3}
+.pcard-seller{font-size:.72rem;color:var(--grey);margin-bottom:6px}
+.pcard-stars{color:var(--gold);font-size:.7rem;margin-bottom:6px}
+.pcard-stars span{color:var(--grey);font-size:.68rem}
+.pcard-bottom{display:flex;justify-content:space-between;align-items:center}
+.pcard-price{font-family:var(--ff-d);font-size:1.15rem;font-weight:700;color:var(--green-deep)}
+.pcard-add{width:36px;height:36px;background:var(--green-mid);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all var(--ease);cursor:pointer}
+.pcard-add:hover{background:var(--green-deep);transform:scale(1.1)}
+</style>
+
+<style>
+/* COLLECTIONS */
+.coll-sec{background:var(--green-deep);color:var(--cream);padding:80px 5%;position:relative;overflow:hidden}
+.coll-sec::before{content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,160,23,.15),transparent 70%);border-radius:50%}
+.coll-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;z-index:1}
+.coll-left h2{font-family:var(--ff-d);font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1.5rem}
+.coll-card{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,.06);border-radius:10px;margin-bottom:1rem;transition:all var(--ease);cursor:pointer;border:1px solid rgba(255,255,255,.08)}
+.coll-card:hover{background:rgba(255,255,255,.12);transform:translateX(6px)}
+.coll-card .ic{width:44px;height:44px;background:rgba(212,160,23,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.coll-card h4{font-size:.9rem;margin-bottom:2px}.coll-card p{font-size:.72rem;color:rgba(255,255,255,.5)}
+.coll-right{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.coll-mini{background:rgba(255,255,255,.07);border-radius:10px;padding:20px;text-align:center;transition:var(--ease);border:1px solid rgba(255,255,255,.06)}
+.coll-mini:hover{background:rgba(255,255,255,.14)}
+.coll-mini .em{font-size:2.2rem;margin-bottom:8px}
+.coll-mini h4{font-size:.82rem;margin-bottom:3px}.coll-mini p{font-size:.7rem;color:rgba(255,255,255,.5)}
+.coll-mini:first-child{grid-column:span 2}
+
+/* IMPACT */
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.impact-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.imp-stat{background:var(--white);padding:24px;border-radius:12px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.imp-stat .num{font-family:var(--ff-d);font-size:2rem;font-weight:700;color:var(--green-deep)}
+.imp-stat .lab{font-size:.75rem;color:var(--grey);margin-top:4px}
+.story-card{background:var(--white);padding:24px;border-radius:12px;border-left:4px solid var(--gold);margin-bottom:1.2rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.story-card q{font-family:var(--ff-d);font-style:italic;font-size:.95rem;line-height:1.6;color:var(--charcoal);display:block;margin-bottom:12px}
+.story-card .author{display:flex;align-items:center;gap:10px}
+.story-card .av{width:36px;height:36px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700}
+.story-card .aname{font-size:.8rem;font-weight:600}.story-card .arole{font-size:.68rem;color:var(--grey)}
+
+/* HOW IT WORKS */
+.hiw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;position:relative}
+.hiw-grid::before{content:'';position:absolute;top:36px;left:12%;right:12%;height:2px;background:var(--cream2);z-index:0}
+.hiw-step{text-align:center;position:relative;z-index:1}
+.hiw-num{width:56px;height:56px;background:var(--cream2);color:var(--charcoal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:1.3rem;font-weight:700;margin:0 auto 1rem;transition:all var(--ease)}
+.hiw-step:hover .hiw-num{background:var(--gold);color:var(--white);transform:scale(1.1)}
+.hiw-step h4{font-size:.95rem;font-weight:600;margin-bottom:6px}
+.hiw-step p{font-size:.78rem;color:var(--grey);line-height:1.5}
+
+/* TESTIMONIAL TICKER */
+.test-wrap{overflow:hidden;position:relative;padding:40px 0}
+.test-wrap::before,.test-wrap::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
+.test-wrap::before{left:0;background:linear-gradient(90deg,var(--cream),transparent)}
+.test-wrap::after{right:0;background:linear-gradient(270deg,var(--cream),transparent)}
+.test-track{display:flex;gap:1.4rem;animation:testScroll 40s linear infinite;width:max-content}
+.test-track:hover{animation-play-state:paused}
+.tcard{flex-shrink:0;width:300px;background:var(--white);border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.tcard .stars{color:var(--gold);font-size:.8rem;margin-bottom:8px}
+.tcard q{font-size:.85rem;line-height:1.6;color:var(--charcoal);display:block;margin-bottom:12px;font-style:italic}
+.tcard .tauthor{font-size:.78rem;font-weight:600}.tcard .tloc{font-size:.68rem;color:var(--grey)}
+@keyframes testScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SELLER TIERS */
+.tier-sec{background:linear-gradient(135deg,var(--green-deep),var(--charcoal));color:var(--cream);padding:80px 5%;position:relative;overflow:hidden;text-align:center}
+.tier-sec::before{content:'';position:absolute;top:50%;left:50%;width:400px;height:400px;background:radial-gradient(circle,rgba(212,160,23,.12),transparent 70%);transform:translate(-50%,-50%);border-radius:50%}
+.tier-sec h2{font-family:var(--ff-d);font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:.6rem;position:relative}
+.tier-sec>p{color:rgba(255,255,255,.6);margin-bottom:3rem;position:relative}
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;max-width:900px;margin:0 auto;position:relative;z-index:1}
+.tier-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:32px 24px;text-align:center;transition:var(--ease)}
+.tier-card:hover{background:rgba(255,255,255,.12);transform:translateY(-4px)}
+.tier-card.featured{border-color:var(--gold);background:rgba(212,160,23,.08)}
+.tier-icon{font-size:1.8rem;margin-bottom:8px}
+.tier-name{font-family:var(--ff-d);font-size:1.2rem;font-weight:600;margin-bottom:4px}
+.tier-price{font-family:var(--ff-m);font-size:.85rem;color:var(--gold);margin-bottom:1.2rem}
+.tier-feat{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:6px;line-height:1.5}
+.tier-btn{margin-top:1.2rem;padding:10px 28px;border-radius:8px;font-weight:600;font-size:.8rem;background:var(--gold);color:var(--charcoal);transition:all var(--ease);display:inline-block;cursor:pointer}
+.tier-btn:hover{background:var(--gold-light)}
+
+/* FOOTER */
+#footer{background:var(--charcoal);color:var(--cream);padding:60px 5% 0}
+.news-sec{text-align:center;margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.news-sec h3{font-family:var(--ff-d);font-size:1.6rem;margin-bottom:.5rem}
+.news-sec p{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:1.2rem}
+.news-form{display:flex;gap:.5rem;justify-content:center;max-width:400px;margin:0 auto}
+.news-form input{flex:1;padding:10px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:.85rem}
+.news-form input::placeholder{color:rgba(255,255,255,.3)}
+.news-form button{padding:10px 24px;background:var(--gold);color:var(--charcoal);border-radius:8px;font-weight:600;font-size:.8rem;transition:var(--ease)}
+.news-form button:hover{background:var(--gold-light)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2.5rem}
+.foot-col h4{font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:1rem}
+.foot-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:8px;transition:color var(--ease)}
+.foot-col a:hover{color:var(--gold)}
+.foot-brand .logo{font-family:var(--ff-d);font-size:1.5rem;margin-bottom:.5rem}
+.foot-brand .logo span{color:var(--gold)}
+.foot-brand p{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:1rem}
+.socials{display:flex;gap:.9rem}
+.socials a{width:38px;height:38px;border:1px solid rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;transition:all .4s cubic-bezier(0.34,1.56,0.64,1)}
+.socials a:hover{background:var(--gold);border-color:var(--gold);color:var(--charcoal);transform:translateY(-5px) rotate(8deg) scale(1.1);box-shadow:0 8px 20px rgba(212,160,23,0.3)}
+.socials a:nth-child(1):hover{background:#000;color:#fff;border-color:#000;box-shadow:0 8px 20px rgba(0,0,0,0.4)} /* X */
+.socials a:nth-child(2):hover{background:#0077b5;color:#fff;border-color:#0077b5;box-shadow:0 8px 20px rgba(0,119,181,0.4)} /* LinkedIn */
+.socials a:nth-child(3):hover{background:#E4405F;color:#fff;border-color:#E4405F;box-shadow:0 8px 20px rgba(228,64,95,0.4)} /* Instagram */
+.socials a:nth-child(4):hover{background:#1877F2;color:#fff;border-color:#1877F2;box-shadow:0 8px 20px rgba(24,119,242,0.4)} /* Facebook */
+.foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:1.2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.foot-bottom span{font-size:.72rem;color:rgba(255,255,255,.35)}
+.pay-icons{display:flex;gap:.8rem;font-size:.7rem;color:rgba(255,255,255,.5)}
+
+/* SEARCH OVERLAY */
+#searchOv{position:fixed;inset:0;background:rgba(253,248,240,.97);z-index:9993;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px)}
+#searchOv.open{opacity:1;pointer-events:all}
+#searchOv .close-s{position:absolute;top:24px;right:32px;font-size:1.5rem;cursor:pointer;color:var(--charcoal)}
+#searchOv input{font-family:var(--ff-d);font-style:italic;font-size:clamp(1.5rem,4vw,2.5rem);border:none;background:none;text-align:center;width:80%;max-width:600px;color:var(--charcoal);border-bottom:2px solid var(--cream2);padding:12px}
+#searchOv input::placeholder{color:var(--grey)}
+.search-tags{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-top:1.5rem}
+.search-tags span{padding:6px 14px;background:var(--cream2);border-radius:50px;font-size:.75rem;cursor:pointer;transition:all var(--ease)}
+.search-tags span:hover{background:var(--green-mid);color:#fff}
+
+/* CART PANEL */
+#cartPanel{position:fixed;top:0;right:-420px;width:400px;max-width:90vw;height:100vh;background:var(--cream);z-index:9992;box-shadow:-4px 0 24px rgba(0,0,0,.1);transition:right .4s var(--ease);display:flex;flex-direction:column}
+#cartPanel.open{right:0}
+.cart-head{padding:20px 24px;border-bottom:1px solid var(--cream2);display:flex;justify-content:space-between;align-items:center}
+.cart-head h3{font-family:var(--ff-d);font-size:1.3rem}
+.cart-head .close-c{font-size:1.3rem;cursor:pointer}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px}
+.cart-empty{text-align:center;padding:3rem 0;color:var(--grey)}
+.cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--cream2);align-items:center}
+.cart-item .ci-img{width:50px;height:50px;background:var(--cream2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.cart-item .ci-info{flex:1}
+.cart-item .ci-name{font-size:.85rem;font-weight:600;margin-bottom:2px}
+.cart-item .ci-price{font-size:.8rem;color:var(--green-mid);font-weight:600}
+.cart-item .ci-qty{display:flex;align-items:center;gap:8px}
+.cart-item .ci-qty button{width:24px;height:24px;border-radius:4px;background:var(--cream2);font-size:.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cart-item .ci-qty span{font-size:.8rem;font-family:var(--ff-m)}
+.cart-item .ci-remove{color:var(--red);font-size:.75rem;cursor:pointer;margin-top:4px}
+.cart-foot{padding:20px 24px;border-top:1px solid var(--cream2)}
+.cart-foot .sub{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:6px}
+.cart-foot .sub .val{font-family:var(--ff-d);font-weight:700;color:var(--green-deep);font-size:1.1rem}
+.cart-foot .free-ship{font-size:.72rem;color:var(--green-mid);margin-bottom:12px}
+.cart-foot .checkout-btn{width:100%;padding:12px;background:var(--green-mid);color:#fff;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:background var(--ease)}
+.cart-foot .checkout-btn:hover{background:var(--green-deep)}
+#cartOv{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:9991;opacity:0;pointer-events:none;transition:opacity .3s}
+#cartOv.open{opacity:1;pointer-events:all}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green-mid);color:var(--cream);padding:12px 24px;border-radius:10px;font-size:.82rem;font-weight:500;z-index:99999;transform:translateY(20px);opacity:0;animation:toastIn .3s forwards;box-shadow:0 4px 20px rgba(0,0,0,.15);display:flex;align-items:center;gap:8px}
+@keyframes toastIn{to{transform:translateY(0);opacity:1}}
+
+/* SNAP NAV */
+.snap-nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:9980;display:flex;flex-direction:column;gap:10px}
+.snap-dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.15);transition:all var(--ease);cursor:pointer}
+.snap-dot.active{background:var(--green-mid);transform:scale(1.4)}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s cubic-bezier(.22,1,.36,1)}
+.rev.show{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* MOBILE BOTTOM NAV */
+#mobNav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(253,248,240,.95);backdrop-filter:blur(12px);z-index:9988;padding:8px 0 calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--cream2)}
+#mobNav .mn-items{display:flex;justify-content:space-around}
+#mobNav .mn-item{text-align:center;font-size:1.1rem;padding:6px 12px;color:var(--grey);transition:color var(--ease)}
+#mobNav .mn-item.act{color:var(--green-mid)}
+#mobNav .mn-item span{display:block;font-size:.6rem;margin-top:2px}
+
+/* RESPONSIVE */
+@media(max-width:1200px){.pgrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){
+.pgrid{grid-template-columns:repeat(2,1fr)}
+#nav .links,#nav .acts .btn-p,#nav .acts .btn-g{display:none}
+#hamburger{display:flex}
+.coll-grid,.impact-grid{grid-template-columns:1fr}
+.foot-grid{grid-template-columns:repeat(2,1fr)}
+.tier-grid{grid-template-columns:1fr}
+.hiw-grid{grid-template-columns:repeat(2,1fr)}
+.hiw-grid::before{display:none}
+.float-label{display:none}
+.snap-nav{display:none}
+#mobNav{display:block}
+}
+@media(max-width:600px){
+.pgrid{grid-template-columns:1fr}
+.stats-bar{flex-direction:column;gap:1rem}
+.foot-grid{grid-template-columns:1fr}
+.hero-h1{font-size:2rem}
+.news-form{flex-direction:column}
+}
+</style>
+
+</head>
+<body>
+<!-- Scroll Progress -->
+<div id="scrollProg"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="flag">Made in Rwanda</div>
+  <div class="logo">
+    <svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-white">
+      <defs><linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D4A017"/><stop offset="100%" stop-color="#F1C40F"/></linearGradient></defs>
+      <circle cx="30" cy="30" r="28" stroke="#FFFFFF" stroke-width="2.5" />
+      <path d="M30 12C30 12 18 18 18 30C18 42 42 42 42 30C42 18 30 12 30 12Z" fill="#FFFFFF" />
+      <circle cx="42" cy="18" r="4" fill="#FFFFFF" />
+      <text x="70" y="38" font-family="'Playfair Display', serif" font-size="34" font-weight="900" fill="#FFFFFF">INZIRA</text>
+      <text x="71" y="52" font-family="'DM Sans', sans-serif" font-size="11" font-weight="600" letter-spacing="6" fill="#FFFFFF" opacity="0.8">MARKET</text>
+    </svg>
+  </div>
+  <div class="tag">From Rwanda's Heart - To The World</div>
+  <div class="bar-wrap"><div class="bar-fill"></div></div>
+  <div class="pct">0%</div>
+</div>
+
+<!-- Cinematic Bars -->
+<div class="cbar cbar-t" id="cbarT"></div>
+<div class="cbar cbar-b" id="cbarB"></div>
+
+<!-- Search Overlay -->
+<div id="searchOv">
+  <button class="close-s" onclick="toggleSearch()">&times;</button>
+  <input type="text" id="searchInput" placeholder="Search Rwandan treasures..." oninput="handleSearch(this.value)">
+  <div class="search-tags">
+    <span onclick="handleSearch('coffee')">Coffee</span>
+    <span onclick="handleSearch('basket')">Baskets</span>
+    <span onclick="handleSearch('honey')">Honey</span>
+    <span onclick="handleSearch('fashion')">Fashion</span>
+    <span onclick="handleSearch('skincare')">Skincare</span>
+    <span onclick="handleSearch('jewelry')">Jewelry</span>
+  </div>
+</div>
+
+<!-- Cart Overlay -->
+<div id="cartOv" onclick="toggleCart()"></div>
+
+<!-- Cart Panel -->
+<div id="cartPanel">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button class="close-c" onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your cart is empty.<br>Discover amazing Rwandan products!</div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="free-ship" id="freeShip">Add more for free shipping over $50!</div>
+    <div class="sub"><span>Subtotal</span><span class="val" id="cartTotal">$0.00</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo" onclick="goSec('hero')">
+    <svg width="180" height="50" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="goldN" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D4A017"/><stop offset="100%" stop-color="#F1C40F"/></linearGradient></defs>
+      <circle cx="30" cy="30" r="26" stroke="#D4A017" stroke-width="2.5" />
+      <path d="M30 14C30 14 20 20 20 30C20 40 40 40 40 30C40 20 30 14 30 14Z" fill="#D4A017" />
+      <circle cx="40" cy="18" r="4" fill="#D4A017" />
+      <text x="70" y="38" font-family="'Playfair Display', serif" font-size="32" font-weight="900" fill="#1B4332">INZIRA</text>
+      <text x="70" y="52" font-family="'DM Sans', sans-serif" font-size="11" font-weight="600" letter-spacing="6" fill="#D4A017" opacity="0.9">MARKET</text>
+    </svg>
+  </a>
+  <div class="links">
+    <a href="#" onclick="goSec('shop')">Shop</a>
+    <a href="#" onclick="goSec('collections')">Collections</a>
+    <a href="#" onclick="goSec('mission')">Our Mission</a>
+    <a href="#" onclick="goSec('tiers')">Sell</a>
+  </div>
+  <div class="acts">
+    <button onclick="toggleSearch()" title="Search"><svg class="svg-ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+    <button onclick="goSec('shop')" title="Wishlist" id="wishBtn"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="badge" id="wishBadge" style="display:none">0</span></button>
+    <button onclick="toggleCart()" title="Cart"><svg class="svg-ic" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="badge" id="cartBadge" style="display:none">0</span></button>
+    <button class="btn-g" onclick="showToast('Login coming soon!')">Login</button>
+    <button class="btn-p" onclick="showToast('Registration coming soon!')">Register</button>
+  </div>
+  <div id="hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div id="drawer-overlay" onclick="toggleDrawer()"></div>
+<div id="drawer">
+  <div class="logo" style="margin-bottom:2rem; padding-left:1rem">
+    <svg width="160" height="45" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="26" stroke="#D4A017" stroke-width="2.5" />
+      <path d="M30 14C30 14 20 20 20 30C20 40 40 40 40 30C40 20 30 14 30 14Z" fill="#D4A017" />
+      <circle cx="40" cy="18" r="4" fill="#D4A017" />
+      <text x="70" y="38" font-family="'Playfair Display', serif" font-size="32" font-weight="900" fill="#1B4332">INZIRA</text>
+      <text x="70" y="52" font-family="'DM Sans', sans-serif" font-size="11" font-weight="600" letter-spacing="6" fill="#D4A017">MARKET</text>
+    </svg>
+  </div>
+  <a href="#" onclick="goSec('shop');toggleDrawer()">Shop</a>
+  <a href="#" onclick="goSec('collections');toggleDrawer()">Collections</a>
+  <a href="#" onclick="goSec('mission');toggleDrawer()">Our Mission</a>
+  <a href="#" onclick="goSec('tiers');toggleDrawer()">Sell on Inzira</a>
+  <a href="#" onclick="toggleSearch();toggleDrawer()">Search</a>
+  <a href="#" onclick="toggleCart();toggleDrawer()">Cart</a>
+  <div class="drawer-acts">
+    <button class="btn-g" onclick="showToast('Login coming soon!')">Login</button>
+    <button class="btn-p" onclick="showToast('Registration coming soon!')">Register</button>
+  </div>
+</div>
+
+<!-- Snap Nav -->
+<div class="snap-nav" id="snapNav">
+  <div class="snap-dot active" data-sec="hero" onclick="goSec('hero')"></div>
+  <div class="snap-dot" data-sec="shop" onclick="goSec('shop')"></div>
+  <div class="snap-dot" data-sec="collections" onclick="goSec('collections')"></div>
+  <div class="snap-dot" data-sec="mission" onclick="goSec('mission')"></div>
+  <div class="snap-dot" data-sec="hiw" onclick="goSec('hiw')"></div>
+  <div class="snap-dot" data-sec="tiers" onclick="goSec('tiers')"></div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <video autoplay muted loop playsinline class="hero-vid"><source src="home.mp4" type="video/mp4"></video>
+  <canvas id="heroCanvas"></canvas>
+  <div class="float-label fl-1 rev d1">100% Organic</div>
+  <div class="float-label fl-2 rev d2">Ships to 42 Countries</div>
+  <div class="float-label fl-3 rev d3">Fair Trade Certified</div>
+  <div class="float-label fl-4 rev d4">Secure Payments</div>
+  <div class="hero-c">
+    <div class="trust-badge rev">Rwanda's Premier Direct-to-Consumer Platform</div>
+    <h1 class="hero-h1 rev" id="heroH1" data-split>Rwanda's Finest Crafts, Curated for the World</h1>
+    <p class="hero-sub rev d2">Connecting Rwanda's master artisans and organic farmers directly to your doorstep. Every purchase empowers a makers' community.</p>
+    <div class="hero-btns rev d3">
+      <button class="btn-p" onclick="goSec('shop')">Shop Collection</button>
+      <button class="btn-g" onclick="goSec('mission')">The Inzira Story</button>
+    </div>
+    <div class="stats-bar rev d4">
+      <div class="stat-item"><div class="stat-num" data-target="2400">0</div><div class="stat-lab">Products</div></div>
+      <div class="stat-item"><div class="stat-num" data-target="180">0</div><div class="stat-lab">Verified Sellers</div></div>
+      <div class="stat-item"><div class="stat-num" data-target="42">0</div><div class="stat-lab">Countries</div></div>
+      <div class="stat-item"><div class="stat-num" data-target="100">0</div><div class="stat-lab">Authentic</div></div>
+    </div>
+    <div class="scroll-ind rev d5"><span>Scroll</span><div class="line"></div></div>
+  </div>
+</section>
+
+<!-- CATEGORY TICKER -->
+<div class="ticker-wrap" id="tickerWrap">
+  <div class="ticker" id="ticker"></div>
+</div>
+
+<!-- SHOP SECTION -->
+<section class="sec" id="shop">
+  <div class="sec-h rev"><h2 data-split>The Artisan Collection</h2><p>Discover authentic Rwandan treasures - handcrafted by masters, delivered with love.</p><div class="line"></div></div>
+  <div class="shop-controls rev d1">
+    <div class="filter-pills" id="filterPills"></div>
+    <select class="sort-sel" id="sortSel" onchange="sortProducts(this.value)">
+      <option value="featured">Featured</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+      <option value="newest">Newest</option>
+      <option value="rated">Best Rated</option>
+    </select>
+  </div>
+  <div class="pgrid" id="productGrid"></div>
+</section>
+
+<!-- FEATURED COLLECTIONS -->
+<section class="coll-sec" id="collections">
+  <div class="coll-grid">
+    <div class="coll-left rev">
+      <h2 data-split>Bespoke Collections</h2>
+      <p style="color:rgba(255,255,255,.6);margin-bottom:2rem;font-size:.9rem">Explore handpicked selections that celebrate Rwanda's finest offerings.</p>
+      <div class="coll-card rev d1" onclick="filterProducts('Coffee');goSec('shop')"><div><h4>The Coffee Trail</h4><p>Single origin, farm-to-cup excellence</p></div></div>
+      <div class="coll-card rev d2" onclick="filterProducts('Crafts');goSec('shop')"><div><h4>Artisan Quarter</h4><p>Handwoven, carved, and painted treasures</p></div></div>
+      <div class="coll-card rev d3" onclick="filterProducts('Food');goSec('shop')"><div><h4>Farm Direct</h4><p>Organic honey, spices, and natural goods</p></div></div>
+      <div class="coll-card rev d4" onclick="showToast('Global Rwanda collection coming soon!')"><div><h4>Global Rwanda</h4><p>Best sellers loved worldwide</p></div></div>
+    </div>
+    <div class="coll-right rev d2">
+      <div class="coll-mini"><h4>Rwandan Single Origin</h4><p>From $18.99</p></div>
+      <div class="coll-mini"><h4>Agaseke Baskets</h4><p>From $45.00</p></div>
+      <div class="coll-mini"><h4>Pure Honey</h4><p>From $16.00</p></div>
+      <div class="coll-mini"><h4>Ankara Fashion</h4><p>From $65.00</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT & STORIES -->
+<section class="sec" id="mission">
+  <div class="sec-h rev"><h2 data-split>The Inzira Impact</h2><p>Connecting conscious buyers with master makers. Your purchase fuels Rwandan dreams.</p><div class="line"></div></div>
+  <div class="impact-grid">
+    <div class="impact-stats rev">
+      <div class="imp-stat"><div class="num" data-target="3200">0</div><div class="lab">Farmers Empowered</div></div>
+      <div class="imp-stat"><div class="num" data-target="68">0</div><div class="lab">% More Income to Makers</div></div>
+      <div class="imp-stat"><div class="num" data-target="42">0</div><div class="lab">Countries Reached</div></div>
+      <div class="imp-stat"><div class="num" data-target="180">0</div><div class="lab">Active Sellers</div></div>
+    </div>
+    <div class="rev d2">
+      <div class="story-card"><q>Inzira gave my art a global stage. My imigongo pieces now hang in homes across Europe and America.</q><div class="author"><div class="av">A</div><div><div class="aname">Annonciata Cyuzuzo</div><div class="arole">Imigongo Artist, Nyanza</div></div></div></div>
+      <div class="story-card"><q>Our cooperative's income increased by 68% since joining Inzira. We can now invest in better processing equipment.</q><div class="author"><div class="av">J</div><div><div class="aname">Jean-Baptiste Nzeyimana</div><div class="arole">Coffee Cooperative Lead, Huye</div></div></div></div>
+      <div class="story-card"><q>My baskets used to sell only at the local market. Now I ship to 15 countries. My daughters are in school because of Inzira.</q><div class="author"><div class="av">M</div><div><div class="aname">Mukamana Marie</div><div class="arole">Master Weaver, Rwamagana</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="hiw" style="background:var(--cream2)">
+  <div class="sec-h rev"><h2>How It Works</h2><p>From Rwanda's makers to your doorstep - simple, direct, and fair.</p><div class="line"></div></div>
+  <div class="hiw-grid">
+    <div class="hiw-step rev d1"><div class="hiw-num">1</div><h4>Discover</h4><p>Browse verified products from Rwanda's best makers and farmers.</p></div>
+    <div class="hiw-step rev d2"><div class="hiw-num">2</div><h4>Order</h4><p>Pay securely with MTN MoMo, Visa, PayPal, or bank transfer.</p></div>
+    <div class="hiw-step rev d3"><div class="hiw-num">3</div><h4>Maker Ships</h4><p>Your order goes directly to the maker who carefully packs and ships it.</p></div>
+    <div class="hiw-step rev d4"><div class="hiw-num">4</div><h4>Delivered</h4><p>Track your package from Kigali to your door - anywhere in the world.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS TICKER -->
+<section class="sec" id="testSec">
+  <div class="sec-h rev"><h2>What Buyers Say</h2><p>Join thousands of happy customers discovering Rwanda.</p><div class="line"></div></div>
+  <div class="test-wrap"><div class="test-track" id="testTrack"></div></div>
+</section>
+
+<!-- SELLER TIERS -->
+<section class="tier-sec" id="tiers">
+  <h2 class="rev">Start Selling on Inzira</h2>
+  <p class="rev d1">Choose the plan that fits your business. Grow from local to global.</p>
+  <div class="tier-grid">
+    <div class="tier-card rev d1">
+      <div class="tier-name">Starter</div><div class="tier-price">Free</div>
+      <div class="tier-feat">List up to 10 products</div><div class="tier-feat">Basic analytics</div><div class="tier-feat">Community support</div><div class="tier-feat">Local delivery only</div>
+      <div class="tier-btn" onclick="showToast('Starter plan sign up coming soon!')">Get Started Free</div>
+    </div>
+    <div class="tier-card featured rev d2">
+      <div class="tier-name">Growth</div><div class="tier-price">RWF 15,000/mo</div>
+      <div class="tier-feat">Unlimited products</div><div class="tier-feat">Advanced analytics</div><div class="tier-feat">Priority support</div><div class="tier-feat">Africa-wide delivery</div><div class="tier-feat">Promotional features</div>
+      <div class="tier-btn" onclick="showToast('Growth plan - Coming soon!')">Upgrade to Growth</div>
+    </div>
+    <div class="tier-card rev d3">
+      <div class="tier-name">Premium</div><div class="tier-price">RWF 35,000/mo</div>
+      <div class="tier-feat">Everything in Growth</div><div class="tier-feat">Global shipping</div><div class="tier-feat">Dedicated account manager</div><div class="tier-feat">Featured placement</div><div class="tier-feat">Bulk export tools</div>
+      <div class="tier-btn" onclick="showToast('Premium plan sign up coming soon!')">Go Premium</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="news-sec rev">
+    <h3>Stay Connected</h3>
+    <p>Get updates on new products, maker stories, and exclusive offers.</p>
+    <form class="news-form" onsubmit="event.preventDefault();showToast('Subscribed! Welcome to the Inzira family');this.reset()">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+  <div class="foot-grid">
+    <div class="foot-col foot-brand">
+      <div class="logo">
+        <svg width="180" height="50" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="26" stroke="#D4A017" stroke-width="2.5" />
+          <path d="M30 14C30 14 20 20 20 30C20 40 40 40 40 30C40 20 30 14 30 14Z" fill="#D4A017" />
+          <circle cx="40" cy="18" r="4" fill="#D4A017" />
+          <text x="70" y="38" font-family="'Playfair Display', serif" font-size="32" font-weight="900" fill="#FFFFFF">INZIRA</text>
+          <text x="70" y="52" font-family="'DM Sans', sans-serif" font-size="11" font-weight="600" letter-spacing="6" fill="#D4A017">MARKET</text>
+        </svg>
+      </div>
+      <p>Connecting Rwanda's heart to the world. Every purchase empowers a maker, supports a family, and builds a future.</p>
+      <div class="socials">
+        <a href="#" onclick="showToast('Follow us on X!')" title="X (Twitter)">
+          <svg class="svg-ic" viewBox="0 0 24 24"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768m2.464-2.464l6.768-6.768" stroke-width="2" /></svg>
+        </a>
+        <a href="#" onclick="showToast('Follow us on LinkedIn!')" title="LinkedIn">
+          <svg class="svg-ic" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></svg>
+        </a>
+        <a href="#" onclick="showToast('Follow us on Instagram!')" title="Instagram">
+          <svg class="svg-ic" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+        </a>
+        <a href="#" onclick="showToast('Follow us on Facebook!')" title="Facebook">
+          <svg class="svg-ic" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+        </a>
+      </div>
+    </div>
+    <div class="foot-col"><h4>Shop</h4><a href="#" onclick="filterProducts('Coffee');goSec('shop')">Coffee & Tea</a><a href="#" onclick="filterProducts('Crafts');goSec('shop')">Crafts & Art</a><a href="#" onclick="filterProducts('Fashion');goSec('shop')">Fashion</a><a href="#" onclick="filterProducts('Food');goSec('shop')">Food & Honey</a><a href="#" onclick="filterProducts('Skincare');goSec('shop')">Skincare</a></div>
+    <div class="foot-col"><h4>Sell</h4><a href="#" onclick="goSec('tiers')">Start Selling</a><a href="#" onclick="showToast('Seller guides coming soon!')">Seller Guide</a><a href="#" onclick="showToast('Pricing info coming soon!')">Pricing</a><a href="#" onclick="showToast('Success stories coming soon!')">Success Stories</a></div>
+    <div class="foot-col"><h4>Company</h4><a href="#" onclick="goSec('mission')">Our Mission</a><a href="#" onclick="showToast('About page coming soon!')">About Us</a><a href="#" onclick="showToast('Careers page coming soon!')">Careers</a><a href="#" onclick="showToast('Press page coming soon!')">Press</a></div>
+    <div class="foot-col"><h4>Support</h4><a href="#" onclick="showToast('Help center coming soon!')">Help Center</a><a href="#" onclick="showToast('Contact form coming soon!')">Contact Us</a><a href="#" onclick="showToast('Shipping info coming soon!')">Shipping Info</a><a href="#" onclick="showToast('Returns info coming soon!')">Returns</a></div>
+  </div>
+  <div class="foot-bottom">
+    <span>(c) 2026 Inzira Market. Made in Kigali, Rwanda. Prices also available in RWF.</span>
+    <div class="pay-icons"><span>MTN MoMo</span><span>Airtel</span><span>Visa</span><span>PayPal</span><span>SSL Secure</span></div>
+  </div>
+</footer>
+
+<!-- Mobile Bottom Nav -->
+<div id="mobNav">
+  <div class="mn-items">
+    <div class="mn-item act" onclick="goSec('hero')"><span>Home</span></div>
+    <div class="mn-item" onclick="goSec('shop')"><span>Shop</span></div>
+    <div class="mn-item" onclick="toggleCart()"><span>Cart</span></div>
+    <div class="mn-item" onclick="showToast('Account coming soon!')"><span>Account</span></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// --- PRODUCT DATA ---
+const PRODUCTS=[
+{id:1,img:'assets/prod_coffee.png',name:'Rwandan Single Origin Coffee',seller:'Dukunde Kawa Coop',price:18.99,cat:'Coffee',stars:5,reviews:247,badge:'verified'},
+{id:2,img:'assets/prod_basket.png',name:'Hand-woven Imigongo Wall Art',seller:'Gasabo Arts',price:89.00,cat:'Crafts',stars:5,reviews:89,badge:'top'},
+{id:3,img:'assets/prod_tea.png',name:'Rwanda Mountain Tea',seller:'Sorwathe Estate',price:12.50,cat:'Coffee',stars:4.5,reviews:163,badge:'verified'},
+{id:4,img:'assets/prod_basket.png',name:'Traditional Agaseke Basket Set',seller:'Nyamata Weavers',price:45.00,cat:'Crafts',stars:5,reviews:201,badge:'top'},
+{id:5,img:'assets/prod_honey.png',name:'Pure Rwandan Honey',seller:'Nyungwe Apiaries',price:16.00,cat:'Food',stars:5,reviews:318,badge:'verified'},
+{id:6,img:'assets/prod_fashion.png',name:'Ankara Print Dress',seller:'Kigali Fashion House',price:65.00,cat:'Fashion',stars:4.5,reviews:74,badge:'new'},
+{id:7,img:'assets/prod_tea.png',name:'Volcanic Soil Face Mask',seller:'Virunga Naturals',price:22.00,cat:'Skincare',stars:5,reviews:156,badge:'verified'},
+{id:8,img:'assets/prod_basket.png',name:'Hand-carved Wooden Giraffe',seller:'Kimironko Crafters',price:38.00,cat:'Crafts',stars:4,reviews:92,badge:'verified'},
+{id:9,img:'assets/prod_honey.png',name:'Rwandan Chili Hot Sauce 3-Pack',seller:'Kigali Spice Co',price:24.00,cat:'Food',stars:5,reviews:441,badge:'top'},
+{id:10,img:'assets/prod_fashion.png',name:'Sisal Shoulder Bag',seller:'Lake Kivu Artisans',price:52.00,cat:'Fashion',stars:4.5,reviews:67,badge:'verified'},
+{id:11,img:'assets/prod_tea.png',name:'Organic Moringa Powder',seller:'Green Hills Rwanda',price:19.00,cat:'Skincare',stars:5,reviews:283,badge:'verified'},
+{id:12,img:'assets/prod_fashion.png',name:'Batik Table Runner 2m',seller:'Nyamirambo Creative',price:29.00,cat:'Home',stars:4,reviews:55,badge:'new'},
+{id:13,img:'assets/prod_basket.png',name:'Copper Wire Jewelry Set',seller:'Kigali Metalworks',price:48.00,cat:'Jewelry',stars:5,reviews:118,badge:'top'},
+{id:14,img:'assets/prod_tea.png',name:'Dried Hibiscus 1kg',seller:'Bugesera Farms',price:14.00,cat:'Food',stars:4.5,reviews:209,badge:'verified'},
+{id:15,img:'assets/prod_basket.png',name:'Traditional Inanga Instrument',seller:'Rwanda Music Arts',price:120.00,cat:'Crafts',stars:5,reviews:34,badge:'verified'},
+{id:16,img:'assets/prod_fashion.png',name:'Handmade Leather Sandals',seller:'Huye Leather Guild',price:55.00,cat:'Fashion',stars:5,reviews:88,badge:'verified'},
+{id:17,img:'assets/prod_coffee.png',name:'Rwanda Arabica Whole Beans 1kg',seller:'Rulindo Farmers',price:32.00,cat:'Coffee',stars:5,reviews:195,badge:'top'},
+{id:18,img:'assets/prod_honey.png',name:'Beeswax Candle Set (6)',seller:'Akagera Crafts',price:28.00,cat:'Home',stars:4.5,reviews:76,badge:'new'},
+{id:19,img:'assets/prod_basket.png',name:'Woven Placemat Set (4)',seller:'Rwamagana Weavers',price:22.00,cat:'Home',stars:5,reviews:143,badge:'verified'},
+{id:20,img:'assets/prod_tea.png',name:'Black Soap with Shea',seller:'Musanze Naturals',price:18.00,cat:'Skincare',stars:5,reviews:267,badge:'top'},
+{id:21,img:'assets/prod_coffee.png',name:'Ceramic Coffee Set (4 cups)',seller:'Kigali Pottery',price:68.00,cat:'Home',stars:4.5,reviews:49,badge:'new'},
+{id:22,img:'assets/prod_honey.png',name:'Dried Chili Pepper Mix 500g',seller:'Nyagatare Spices',price:11.00,cat:'Food',stars:4,reviews:321,badge:'verified'},
+{id:23,img:'assets/prod_basket.png',name:'Beaded Necklace Handmade',seller:'Karongi Jewelers',price:42.00,cat:'Jewelry',stars:5,reviews:97,badge:'verified'},
+{id:24,img:'assets/prod_tea.png',name:'Pure Pyrethrum Extract',seller:'Eastern Farms Coop',price:35.00,cat:'Agriculture',stars:4.5,reviews:61,badge:'verified'}
+];
+
+const TESTIMONIALS=[
+{name:'Sarah K.',loc:'London, UK',text:'The imigongo art I ordered is breathtaking. The quality rivals pieces I\'ve seen in top London galleries. Absolutely worth every penny.',stars:5},
+{name:'Marcus T.',loc:'New York, USA',text:'I order Rwandan coffee monthly now. Nothing else compares. The freshness, the flavor - it\'s transformed my morning routine.',stars:5},
+{name:'Amina D.',loc:'Nairobi, Kenya',text:'The Ankara dress is stunning! Perfect fit, beautiful print. Rwanda\'s fashion scene is seriously underrated.',stars:5},
+{name:'Pierre M.',loc:'Paris, France',text:'Sent Agaseke baskets as gifts. My family was amazed by the craftsmanship. Each one is truly a work of art.',stars:5},
+{name:'Jennifer W.',loc:'Toronto, Canada',text:'Discovered Rwandan honey on Inzira and I\'m hooked. Pure, rich, and you can taste the difference. Supporting farmers directly is a bonus!',stars:5},
+{name:'David L.',loc:'Berlin, Germany',text:'As a cafe owner, I need quality beans. Rwandan Arabica from Rulindo is now our house blend. Customers love it.',stars:5},
+{name:'Fatima A.',loc:'Dubai, UAE',text:'I now have 4 imigongo pieces. The geometric patterns are mesmerizing. Inzira makes buying from Rwanda so easy.',stars:5},
+{name:'Luca B.',loc:'Milan, Italy',text:'First time buying from Rwanda. The leather sandals are premium quality - equal to Italian craftsmanship. I\'m impressed.',stars:5}
+];
+
+const CATEGORIES=['All','Coffee','Crafts','Fashion','Food','Skincare','Jewelry','Home','Agriculture'];
+const TICKER_ITEMS=['Coffee and Tea','Crafts and Art','Fashion','Food and Honey','Jewelry','Skincare','Home Decor','Agriculture','Wholesale','Ships Worldwide'];
+
+// --- APP STATE ---
+const AppState={
+  cart:JSON.parse(localStorage.getItem('inzira_cart')||'[]'),
+  wishlist:JSON.parse(localStorage.getItem('inzira_wish')||'[]'),
+  currency:'USD',language:'EN',searchQuery:'',activeFilter:'All',sortBy:'featured',products:[...PRODUCTS]
+};
+function saveState(){localStorage.setItem('inzira_cart',JSON.stringify(AppState.cart));localStorage.setItem('inzira_wish',JSON.stringify(AppState.wishlist))}
+</script>
+
+<script>
+// --- TOAST ---
+function showToast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='[OK] '+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(20px)';setTimeout(()=>t.remove(),300)},2500)}
+
+// --- NAVIGATION ---
+function goSec(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function toggleDrawer(){document.getElementById('drawer').classList.toggle('open');document.getElementById('drawer-overlay').classList.toggle('open')}
+function toggleSearch(){const s=document.getElementById('searchOv');s.classList.toggle('open');if(s.classList.contains('open'))document.getElementById('searchInput').focus()}
+function toggleCart(){document.getElementById('cartPanel').classList.toggle('open');document.getElementById('cartOv').classList.toggle('open')}
+
+// --- CART ---
+function addToCart(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  const existing=AppState.cart.find(x=>x.id===id);
+  if(existing)existing.qty++;else AppState.cart.push({...p,qty:1});
+  saveState();renderCart();showToast(p.name+' added to cart!');
+}
+function removeFromCart(id){AppState.cart=AppState.cart.filter(x=>x.id!==id);saveState();renderCart()}
+function updateQty(id,d){
+  const item=AppState.cart.find(x=>x.id===id);if(!item)return;
+  item.qty+=d;if(item.qty<1)return removeFromCart(id);
+  saveState();renderCart();
+}
+function renderCart(){
+  const c=document.getElementById('cartItems'),f=document.getElementById('cartFoot'),b=document.getElementById('cartBadge');
+  const total=AppState.cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=AppState.cart.reduce((s,i)=>s+i.qty,0);
+  if(count>0){b.style.display='flex';b.textContent=count;b.style.animation='none';b.offsetHeight;b.style.animation='popIn .3s'}else{b.style.display='none'}
+  if(AppState.cart.length===0){c.innerHTML='<div class="cart-empty">Your cart is empty.<br>Discover amazing Rwandan products!</div>';f.style.display='none';return}
+  f.style.display='block';
+  document.getElementById('cartTotal').textContent='$'+total.toFixed(2);
+  document.getElementById('freeShip').textContent=total>=50?'Free shipping available!':'Add $'+(50-total).toFixed(2)+' more for free shipping!';
+  c.innerHTML=AppState.cart.map(i=>`<div class="cart-item">
+    <div class="ci-img"><img src="${i.img}" alt="${i.name}" style="width:100%;height:100%;object-fit:cover;border-radius:4px"></div>
+    <div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-price">$${(i.price*i.qty).toFixed(2)}</div>
+    <div class="ci-qty"><button onclick="updateQty(${i.id},-1)">-</button><span>${i.qty}</span><button onclick="updateQty(${i.id},1)">+</button></div>
+    <div class="ci-remove" onclick="removeFromCart(${i.id})">Remove</div></div></div>`).join('');
+}
+function checkout(){if(AppState.cart.length===0)return showToast('Your cart is empty!');showToast('Order placed successfully! Thank you for supporting Rwandan makers.');AppState.cart=[];saveState();renderCart();toggleCart()}
+
+// --- WISHLIST ---
+function toggleWish(id){
+  const idx=AppState.wishlist.indexOf(id);
+  if(idx>-1){AppState.wishlist.splice(idx,1);showToast('Removed from wishlist')}else{AppState.wishlist.push(id);showToast('Saved to wishlist')}
+  saveState();updateWishUI();
+}
+function updateWishUI(){
+  const b=document.getElementById('wishBadge'),cnt=AppState.wishlist.length;
+  if(cnt>0){b.style.display='flex';b.textContent=cnt}else{b.style.display='none'}
+  document.querySelectorAll('.pcard-wish').forEach(el=>{
+    const id=parseInt(el.dataset.id);el.classList.toggle('liked',AppState.wishlist.includes(id));
+    el.textContent=AppState.wishlist.includes(id)?'Saved':'Save';
+  });
+}
+
+// --- PRODUCTS ---
+function renderProducts(list){
+  const grid=document.getElementById('productGrid');
+  grid.style.opacity='0';grid.style.transform='translateY(15px)';
+  setTimeout(()=>{
+    grid.innerHTML=list.map((p,i)=>{
+      const starStr=getStars(p.stars);
+      const bclass=p.badge==='verified'?'verified':p.badge==='new'?'new':'top';
+      const btxt=p.badge==='verified'?'Verified':p.badge==='new'?'NEW':'BEST SELLER';
+      return `<div class="pcard rev" style="--i:${i}">
+        <div class="pcard-img"><img src="${p.img}" alt="${p.name}" class="pimg"><div class="qv">Quick View</div></div>
+        <button class="pcard-wish" data-id="${p.id}" onclick="event.stopPropagation();toggleWish(${p.id})">${AppState.wishlist.includes(p.id)?'Saved':'Save'}</button>
+        <div class="pcard-badge ${bclass}">${btxt}</div>
+        <div class="pcard-body">
+          <div class="pcard-cat">${p.cat}</div>
+          <div class="pcard-name">${p.name}</div>
+          <div class="pcard-seller">${p.seller}</div>
+          <div class="pcard-stars">${starStr} <span>(${p.reviews})</span></div>
+          <div class="pcard-bottom">
+            <div class="pcard-price">$${p.price.toFixed(2)}</div>
+            <button class="pcard-add" onclick="addToCart(${p.id})">
+              Add
+            </button>
+          </div>
+        </div>
+      </div>`}).join('');
+    grid.style.opacity='1';grid.style.transform='translateY(0)';grid.style.transition='opacity .4s, transform .4s';
+    setTimeout(initReveals,100);
+  },150);
+}
+function getStars(n){return 'Rating: ' + n + '/5'}
+
+function filterProducts(cat){
+  AppState.activeFilter=cat;
+  document.querySelectorAll('.fpill').forEach(p=>{p.classList.toggle('active',p.dataset.cat===cat)});
+  const filtered=cat==='All'?[...PRODUCTS]:PRODUCTS.filter(p=>p.cat===cat);
+  applySortAndRender(filtered);
+}
+function sortProducts(val){
+  AppState.sortBy=val;
+  const filtered=AppState.activeFilter==='All'?[...PRODUCTS]:PRODUCTS.filter(p=>p.cat===AppState.activeFilter);
+  applySortAndRender(filtered);
+}
+function applySortAndRender(list){
+  switch(AppState.sortBy){
+    case'price-low':list.sort((a,b)=>a.price-b.price);break;
+    case'price-high':list.sort((a,b)=>b.price-a.price);break;
+    case'newest':list.sort((a,b)=>(b.badge==='new'?1:0)-(a.badge==='new'?1:0));break;
+    case'rated':list.sort((a,b)=>b.stars-a.stars||b.reviews-a.reviews);break;
+  }
+  renderProducts(list);
+}
+function handleSearch(q){
+  AppState.searchQuery=q.toLowerCase();
+  document.getElementById('searchInput').value=q;
+  if(!q){filterProducts('All');return}
+  const res=PRODUCTS.filter(p=>p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)||p.seller.toLowerCase().includes(q));
+  renderProducts(res);
+  toggleSearch();goSec('shop');
+  showToast(res.length+' products found for "'+q+'"');
+}
+
+// --- FILTER PILLS ---
+function renderFilters(){
+  const c=document.getElementById('filterPills');
+  c.innerHTML=CATEGORIES.map(cat=>`<button class="fpill${cat===AppState.activeFilter?' active':''}" data-cat="${cat}" onclick="filterProducts('${cat}')">${cat}</button>`).join('');
+}
+
+// --- TICKER ---
+function renderTicker(){
+  const t=document.getElementById('ticker');
+  const items=TICKER_ITEMS.concat(TICKER_ITEMS);
+  t.innerHTML=items.map(i=>`<div class="ticker-item">${i}</div>`).join('');
+}
+
+// --- TESTIMONIALS ---
+function renderTestimonials(){
+  const t=document.getElementById('testTrack');
+  const items=TESTIMONIALS.concat(TESTIMONIALS);
+  t.innerHTML=items.map(tc=>`<div class="tcard"><div class="stars">Rating: ${tc.stars}/5</div><q>${tc.text}</q><div class="tauthor">${tc.name}</div><div class="tloc">${tc.loc}</div></div>`).join('');
+}
+
+// --- STAT COUNTERS ---
+function animateCounter(el){
+  const target=parseInt(el.dataset.target);const dur=1800;const start=performance.now();
+  const suffix=el.closest('.stat-item')?.querySelector('.stat-lab')?.textContent==='Authentic'?'%':target>=100?'+':'';
+  function tick(now){
+    const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,2);
+    el.textContent=Math.floor(ease*target)+(p>=1?suffix:'');
+    if(p<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// --- SPLIT TEXT ---
+function splitTextAll(){
+  document.querySelectorAll('[data-split]').forEach(el=>{
+    const txt=el.textContent;el.innerHTML='';
+    txt.split(' ').forEach((word,wi)=>{
+      const w=document.createElement('span');w.className='split-txt';
+      word.split('').forEach((char,ci)=>{
+        const c=document.createElement('span');c.className='split-char';
+        c.textContent=char;c.style.transitionDelay=`${wi*0.05 + ci*0.02}s`;
+        w.appendChild(c);
+      });
+      el.appendChild(w);el.appendChild(document.createTextNode(' '));
+    });
+  });
+}
+
+// --- SCROLL REVEALS ---
+function initReveals(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('show');
+        if(e.target.classList.contains('stagger-parent')){
+          e.target.querySelectorAll(':scope > *').forEach((child,i)=>{
+            child.style.transitionDelay=`${i*0.1}s`;
+            child.classList.add('show');
+          });
+        }
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.rev:not(.show)').forEach(el=>obs.observe(el));
+}
+
+// --- STAT OBSERVER ---
+function initStatCounters(){
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);obs.unobserve(e.target)}})},{threshold:0.3});
+  document.querySelectorAll('[data-target]').forEach(el=>obs.observe(el));
+}
+</script>
+
+<script>
+// --- THREE.JS SCENE ---
+let scene,camera,renderer,threeObjects=[],scrollY=0,heroVisible=true;
+
+function initThree(){
+  const canvas=document.getElementById('heroCanvas');
+  scene=new THREE.Scene();
+  scene.fog=new THREE.FogExp2(0xFDF8F0,0.012);
+  camera=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);
+  camera.position.z=30;
+  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setClearColor(0xFDF8F0,0);
+
+  // Ambient Light
+  scene.add(new THREE.AmbientLight(0xFDF8F0,0.4));
+  // Directional Light (golden sun)
+  const dirLight=new THREE.DirectionalLight(0xF0C040,0.6);dirLight.position.set(10,15,8);scene.add(dirLight);
+  // Moving Point Lights
+  const pl1=new THREE.PointLight(0x52B788,0.8,50);pl1.position.set(-10,5,5);scene.add(pl1);threeObjects.push({mesh:pl1,type:'plight',offset:0});
+  const pl2=new THREE.PointLight(0xD4A017,0.6,50);pl2.position.set(10,-5,5);scene.add(pl2);threeObjects.push({mesh:pl2,type:'plight',offset:Math.PI});
+
+  // Coffee Beans - 15 spheres
+  const beanMat=new THREE.MeshPhongMaterial({color:0x6B3A2A,shininess:60});
+  for(let i=0;i<15;i++){
+    const g=new THREE.SphereGeometry(0.3+Math.random()*0.4,12,12);
+    g.scale(1,0.7,0.8);
+    const m=new THREE.Mesh(g,beanMat);
+    m.position.set((Math.random()-0.5)*40,(Math.random()-0.5)*30,(Math.random()-0.5)*20-5);
+    scene.add(m);
+    // Halo light for some
+    if(i%4===0){const h=new THREE.PointLight(0x8B5E3C,0.3,6);m.add(h)}
+    threeObjects.push({mesh:m,type:'bean',speed:0.002+Math.random()*0.004,floatSpeed:0.3+Math.random()*0.5,floatAmp:0.8+Math.random()*1.2,phase:Math.random()*Math.PI*2});
+  }
+
+  // Tea Leaves - 12 planes
+  const leafMat=new THREE.MeshPhongMaterial({color:0x2D6A4F,side:THREE.DoubleSide,transparent:true,opacity:0.7});
+  for(let i=0;i<12;i++){
+    const g=new THREE.PlaneGeometry(0.8+Math.random()*0.6,0.25+Math.random()*0.15);
+    const m=new THREE.Mesh(g,leafMat.clone());
+    m.material.color.setHex(i%2===0?0x2D6A4F:0x52B788);
+    m.position.set((Math.random()-0.5)*44,(Math.random()-0.5)*28,(Math.random()-0.5)*18-3);
+    m.rotation.set(Math.random()*Math.PI,Math.random()*Math.PI,Math.random()*Math.PI);
+    scene.add(m);
+    threeObjects.push({mesh:m,type:'leaf',rx:0.003+Math.random()*0.005,ry:0.002+Math.random()*0.004,rz:0.001+Math.random()*0.003,phase:Math.random()*Math.PI*2});
+  }
+
+  // Basket Geometries - 8 TorusKnots
+  const basketColors=[0x1A1A2E,0xFFFFFF,0xC8922A];
+  for(let i=0;i<8;i++){
+    const g=new THREE.TorusKnotGeometry(0.6+Math.random()*0.4,0.15,48,8,2,3);
+    const solid=new THREE.Mesh(g,new THREE.MeshPhongMaterial({color:basketColors[i%3],transparent:true,opacity:0.5}));
+    const wire=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:basketColors[(i+1)%3],wireframe:true,transparent:true,opacity:0.3}));
+    solid.add(wire);
+    solid.position.set((Math.random()-0.5)*50,(Math.random()-0.5)*32,(Math.random()-0.5)*15-8);
+    scene.add(solid);
+    threeObjects.push({mesh:solid,type:'basket',rx:0.002+Math.random()*0.003,ry:0.003+Math.random()*0.002,rz:0.001+Math.random()*0.002});
+  }
+
+  // Volcanic Rocks - 10 Dodecahedrons
+  const rockMat=new THREE.MeshPhongMaterial({color:0x1A1A2E,flatShading:true});
+  for(let i=0;i<10;i++){
+    const g=new THREE.DodecahedronGeometry(0.4+Math.random()*0.5,0);
+    const m=new THREE.Mesh(g,rockMat);
+    m.position.set((Math.random()-0.5)*48,(Math.random()-0.5)*30,(Math.random()-0.5)*20-6);
+    scene.add(m);
+    threeObjects.push({mesh:m,type:'rock',rx:0.004+Math.random()*0.006,ry:0.003+Math.random()*0.005,phase:Math.random()*Math.PI*2});
+  }
+
+  // Gold Particles - 1500
+  const partGeo=new THREE.BufferGeometry();
+  const partCount=1500;const partPos=new Float32Array(partCount*3);
+  for(let i=0;i<partCount;i++){partPos[i*3]=(Math.random()-0.5)*80;partPos[i*3+1]=(Math.random()-0.5)*60;partPos[i*3+2]=(Math.random()-0.5)*40-10}
+  partGeo.setAttribute('position',new THREE.BufferAttribute(partPos,3));
+  const partMat=new THREE.PointsMaterial({color:0xD4A017,size:0.08,transparent:true,opacity:0.3});
+  const particles=new THREE.Points(partGeo,partMat);
+  scene.add(particles);
+  threeObjects.push({mesh:particles,type:'particles',positions:partPos,count:partCount});
+
+  // Aurora Planes - 3
+  for(let i=0;i<3;i++){
+    const g=new THREE.PlaneGeometry(60,20,32,16);
+    const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:i===0?0x1B4332:i===1?0x2D6A4F:0xD4A017,transparent:true,opacity:0.06+i*0.02,side:THREE.DoubleSide}));
+    m.position.set(0,-8-i*5,-25-i*5);m.rotation.x=-0.3;
+    scene.add(m);
+    threeObjects.push({mesh:m,type:'aurora',geo:g,speed:0.5+i*0.3,amp:0.3+i*0.1});
+  }
+
+  animateThree();
+}
+
+function animateThree(){
+  if(!heroVisible){requestAnimationFrame(animateThree);return}
+  const t=performance.now()*0.001;
+
+  // Background slow float
+  camera.position.y+=(-scrollY*0.001-camera.position.y)*0.015;
+  camera.lookAt(scene.position);
+
+  threeObjects.forEach(o=>{
+
+    if(o.type==='bean'){o.mesh.rotation.x+=o.speed;o.mesh.rotation.y+=o.speed*0.7;o.mesh.position.y+=Math.sin(t*o.floatSpeed+o.phase)*0.005*o.floatAmp}
+    else if(o.type==='leaf'){o.mesh.rotation.x+=o.rx;o.mesh.rotation.y+=o.ry;o.mesh.rotation.z+=o.rz}
+    else if(o.type==='basket'){o.mesh.rotation.x+=o.rx;o.mesh.rotation.y+=o.ry;o.mesh.rotation.z+=o.rz}
+    else if(o.type==='rock'){o.mesh.rotation.x+=o.rx;o.mesh.rotation.y+=o.ry}
+    else if(o.type==='plight'){o.mesh.position.x=Math.sin(t*0.5+o.offset)*12;o.mesh.position.y=Math.cos(t*0.3+o.offset)*8}
+    else if(o.type==='particles'){
+      const pos=o.mesh.geometry.attributes.position.array;
+      for(let i=0;i<o.count;i++){pos[i*3+1]+=0.008;pos[i*3]+=Math.sin(t+i*0.01)*0.003;if(pos[i*3+1]>30)pos[i*3+1]=-30}
+      o.mesh.geometry.attributes.position.needsUpdate=true;
+    }
+    else if(o.type==='aurora'){
+      const pos=o.geo.attributes.position.array;
+      for(let i=0;i<pos.length;i+=3){pos[i+2]=Math.sin(pos[i]*0.1+t*o.speed)*o.amp+Math.cos(pos[i+1]*0.1+t*o.speed*0.7)*o.amp*0.5}
+      o.geo.attributes.position.needsUpdate=true;
+    }
+  });
+
+  renderer.render(scene,camera);
+  requestAnimationFrame(animateThree);
+}
+
+// Hero visibility observer
+function initHeroObs(){
+  new IntersectionObserver(([e])=>{heroVisible=e.isIntersecting},{threshold:0}).observe(document.getElementById('hero'));
+}
+</script>
+
+<script>
+// --- INITIALIZATION ---
+// Throttled Scroll Handling
+let lastScroll = 0;
+const scrollThrottle = 16;
+window.addEventListener('scroll', () => {
+  const now = Date.now();
+  if (now - lastScroll < scrollThrottle) return;
+  lastScroll = now;
+  scrollY = window.pageYOffset;
+
+  // Progress bar
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('scrollProg').style.width = (scrollY / h * 100) + '%';
+
+  // Nav scroll
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 80);
+
+  // Snap nav
+  const sections = ['hero', 'shop', 'collections', 'mission', 'hiw', 'tiers'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dot = document.querySelector(`.snap-dot[data-sec="${id}"]`);
+    if (dot) dot.classList.toggle('active', rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2);
+  });
+}, { passive: true });
+
+
+// --- LOADER ---
+function initLoader(){
+  const pct=document.querySelector('#loader .pct');
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*4+1;if(p>100)p=100;
+    pct.textContent=Math.floor(p)+'%';
+    if(p>=100){
+      clearInterval(iv);
+      setTimeout(()=>{
+        document.getElementById('loader').style.opacity='0';
+        setTimeout(()=>{
+          document.getElementById('loader').style.display='none';
+          document.getElementById('cbarT').classList.add('hide-t');
+          document.getElementById('cbarB').classList.add('hide-b');
+        },300);
+      },400);
+    }
+  },50);
+}
+
+// --- KEYBOARD ---
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.getElementById('searchOv').classList.remove('open');
+    document.getElementById('cartPanel').classList.remove('open');
+    document.getElementById('cartOv').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+  }
+});
+
+// --- RESIZE ---
+window.addEventListener('resize',()=>{
+  if(renderer){renderer.setSize(window.innerWidth,window.innerHeight);camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix()}
+});
+
+
+// --- INIT ---
+document.addEventListener('DOMContentLoaded',()=>{
+  initLoader();
+  renderFilters();
+  renderProducts(PRODUCTS);
+  renderTicker();
+  renderTestimonials();
+  renderCart();
+  updateWishUI();
+  initThree();
+  initHeroObs();
+  splitTextAll();
+  initReveals();
+  initStatCounters();
+});
+</script>
+</body>
+</html>
+
