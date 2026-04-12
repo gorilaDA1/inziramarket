@@ -1,0 +1,191 @@
+<script>
+// --- TOAST ---
+function showToast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='[OK] '+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(20px)';setTimeout(()=>t.remove(),300)},2500)}
+
+// --- NAVIGATION ---
+function goSec(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function toggleDrawer(){document.getElementById('drawer').classList.toggle('open');document.getElementById('drawer-overlay').classList.toggle('open')}
+function toggleSearch(){const s=document.getElementById('searchOv');s.classList.toggle('open');if(s.classList.contains('open'))document.getElementById('searchInput').focus()}
+function toggleCart(){document.getElementById('cartPanel').classList.toggle('open');document.getElementById('cartOv').classList.toggle('open')}
+
+// --- CART ---
+function addToCart(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  const existing=AppState.cart.find(x=>x.id===id);
+  if(existing)existing.qty++;else AppState.cart.push({...p,qty:1});
+  saveState();renderCart();showToast(p.name+' added to cart!');
+}
+function removeFromCart(id){AppState.cart=AppState.cart.filter(x=>x.id!==id);saveState();renderCart()}
+function updateQty(id,d){
+  const item=AppState.cart.find(x=>x.id===id);if(!item)return;
+  item.qty+=d;if(item.qty<1)return removeFromCart(id);
+  saveState();renderCart();
+}
+function renderCart(){
+  const c=document.getElementById('cartItems'),f=document.getElementById('cartFoot'),b=document.getElementById('cartBadge');
+  const total=AppState.cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=AppState.cart.reduce((s,i)=>s+i.qty,0);
+  if(count>0){b.style.display='flex';b.textContent=count;b.style.animation='none';b.offsetHeight;b.style.animation='popIn .3s'}else{b.style.display='none'}
+  if(AppState.cart.length===0){c.innerHTML='<div class="cart-empty">Your cart is empty.<br>Discover amazing Rwandan products!</div>';f.style.display='none';return}
+  f.style.display='block';
+  document.getElementById('cartTotal').textContent='$'+total.toFixed(2);
+  document.getElementById('freeShip').textContent=total>=50?'Free shipping available!':'Add $'+(50-total).toFixed(2)+' more for free shipping!';
+  c.innerHTML=AppState.cart.map(i=>`<div class="cart-item">
+    <div class="ci-img"><img src="${i.img}" alt="${i.name}" style="width:100%;height:100%;object-fit:cover;border-radius:4px"></div>
+    <div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-price">$${(i.price*i.qty).toFixed(2)}</div>
+    <div class="ci-qty"><button onclick="updateQty(${i.id},-1)">-</button><span>${i.qty}</span><button onclick="updateQty(${i.id},1)">+</button></div>
+    <div class="ci-remove" onclick="removeFromCart(${i.id})">Remove</div></div></div>`).join('');
+}
+function checkout(){if(AppState.cart.length===0)return showToast('Your cart is empty!');showToast('Order placed successfully! Thank you for supporting Rwandan makers.');AppState.cart=[];saveState();renderCart();toggleCart()}
+
+// --- WISHLIST ---
+function toggleWish(id){
+  const idx=AppState.wishlist.indexOf(id);
+  if(idx>-1){AppState.wishlist.splice(idx,1);showToast('Removed from wishlist')}else{AppState.wishlist.push(id);showToast('Saved to wishlist')}
+  saveState();updateWishUI();
+}
+function updateWishUI(){
+  const b=document.getElementById('wishBadge'),cnt=AppState.wishlist.length;
+  if(cnt>0){b.style.display='flex';b.textContent=cnt}else{b.style.display='none'}
+  document.querySelectorAll('.pcard-wish').forEach(el=>{
+    const id=parseInt(el.dataset.id);el.classList.toggle('liked',AppState.wishlist.includes(id));
+    el.textContent=AppState.wishlist.includes(id)?'Saved':'Save';
+  });
+}
+
+// --- PRODUCTS ---
+function renderProducts(list){
+  const grid=document.getElementById('productGrid');
+  if(!grid) return;
+  // Render instantly without delays or hidden animation states
+  grid.innerHTML=list.map((p,i)=>{
+    const starStr=getStars(p.stars);
+    const bclass=p.badge==='verified'?'verified':p.badge==='new'?'new':'top';
+    const btxt=p.badge==='verified'?'Verified':p.badge==='new'?'NEW':'BEST SELLER';
+    return `<div class="pcard">
+      <div class="pcard-img"><img src="${p.img}" alt="${p.name}" class="pimg"><div class="qv">Quick View</div></div>
+      <button class="pcard-wish" data-id="${p.id}" onclick="event.stopPropagation();toggleWish(${p.id})">${AppState.wishlist.includes(p.id)?'Saved':'Save'}</button>
+      <div class="pcard-badge ${bclass}">${btxt}</div>
+      <div class="pcard-body">
+        <div class="pcard-cat">${p.cat}</div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-seller">${p.seller}</div>
+        <div class="pcard-stars">${starStr} <span>(${p.reviews})</span></div>
+        <div class="pcard-bottom">
+          <div class="pcard-price">$${p.price.toFixed(2)}</div>
+          <button class="pcard-add" onclick="addToCart(${p.id})">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>`}).join('');
+  grid.style.opacity='1';
+  grid.style.transform='none';
+  // Re-init reveals for any other elements if needed
+  if(typeof initReveals === 'function') setTimeout(initReveals, 100);
+}
+function getStars(n){return 'Rating: ' + n + '/5'}
+
+function filterProducts(cat){
+  AppState.activeFilter=cat;
+  document.querySelectorAll('.fpill').forEach(p=>{p.classList.toggle('active',p.dataset.cat===cat)});
+  const filtered=cat==='All'?[...PRODUCTS]:PRODUCTS.filter(p=>p.cat===cat);
+  applySortAndRender(filtered);
+}
+function sortProducts(val){
+  AppState.sortBy=val;
+  const filtered=AppState.activeFilter==='All'?[...PRODUCTS]:PRODUCTS.filter(p=>p.cat===AppState.activeFilter);
+  applySortAndRender(filtered);
+}
+function applySortAndRender(list){
+  switch(AppState.sortBy){
+    case'price-low':list.sort((a,b)=>a.price-b.price);break;
+    case'price-high':list.sort((a,b)=>b.price-a.price);break;
+    case'newest':list.sort((a,b)=>(b.badge==='new'?1:0)-(a.badge==='new'?1:0));break;
+    case'rated':list.sort((a,b)=>b.stars-a.stars||b.reviews-a.reviews);break;
+  }
+  renderProducts(list);
+}
+function handleSearch(q){
+  AppState.searchQuery=q.toLowerCase();
+  document.getElementById('searchInput').value=q;
+  if(!q){filterProducts('All');return}
+  const res=PRODUCTS.filter(p=>p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)||p.seller.toLowerCase().includes(q));
+  renderProducts(res);
+  toggleSearch();goSec('shop');
+  showToast(res.length+' products found for "'+q+'"');
+}
+
+// --- FILTER PILLS ---
+function renderFilters(){
+  const c=document.getElementById('filterPills');
+  c.innerHTML=CATEGORIES.map(cat=>`<button class="fpill${cat===AppState.activeFilter?' active':''}" data-cat="${cat}" onclick="filterProducts('${cat}')">${cat}</button>`).join('');
+}
+
+// --- TICKER ---
+function renderTicker(){
+  const t=document.getElementById('ticker');
+  const items=TICKER_ITEMS.concat(TICKER_ITEMS);
+  t.innerHTML=items.map(i=>`<div class="ticker-item">${i}</div>`).join('');
+}
+
+// --- TESTIMONIALS ---
+function renderTestimonials(){
+  const t=document.getElementById('testTrack');
+  const items=TESTIMONIALS.concat(TESTIMONIALS);
+  t.innerHTML=items.map(tc=>`<div class="tcard"><div class="stars">Rating: ${tc.stars}/5</div><q>${tc.text}</q><div class="tauthor">${tc.name}</div><div class="tloc">${tc.loc}</div></div>`).join('');
+}
+
+// --- STAT COUNTERS ---
+function animateCounter(el){
+  const target=parseInt(el.dataset.target);const dur=1800;const start=performance.now();
+  const suffix=el.closest('.stat-item')?.querySelector('.stat-lab')?.textContent==='Authentic'?'%':target>=100?'+':'';
+  function tick(now){
+    const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,2);
+    el.textContent=Math.floor(ease*target)+(p>=1?suffix:'');
+    if(p<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// --- SPLIT TEXT ---
+function splitTextAll(){
+  document.querySelectorAll('[data-split]').forEach(el=>{
+    const txt=el.textContent;el.innerHTML='';
+    txt.split(' ').forEach((word,wi)=>{
+      const w=document.createElement('span');w.className='split-txt';
+      word.split('').forEach((char,ci)=>{
+        const c=document.createElement('span');c.className='split-char';
+        c.textContent=char;c.style.transitionDelay=`${wi*0.05 + ci*0.02}s`;
+        w.appendChild(c);
+      });
+      el.appendChild(w);el.appendChild(document.createTextNode(' '));
+    });
+  });
+}
+
+// --- SCROLL REVEALS ---
+function initReveals(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('show');
+        if(e.target.classList.contains('stagger-parent')){
+          e.target.querySelectorAll(':scope > *').forEach((child,i)=>{
+            child.style.transitionDelay=`${i*0.1}s`;
+            child.classList.add('show');
+          });
+        }
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.rev:not(.show)').forEach(el=>obs.observe(el));
+}
+
+// --- STAT OBSERVER ---
+function initStatCounters(){
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);obs.unobserve(e.target)}})},{threshold:0.3});
+  document.querySelectorAll('[data-target]').forEach(el=>obs.observe(el));
+}
+</script>

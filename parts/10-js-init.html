@@ -1,0 +1,131 @@
+<script>
+// --- INITIALIZATION ---
+// Throttled Scroll Handling
+let lastScroll = 0;
+const scrollThrottle = 16;
+window.addEventListener('scroll', () => {
+  const now = Date.now();
+  if (now - lastScroll < scrollThrottle) return;
+  lastScroll = now;
+  scrollY = window.pageYOffset;
+
+  // Progress bar
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('scrollProg').style.width = (scrollY / h * 100) + '%';
+
+  // Nav scroll
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 80);
+
+  // Snap nav
+  const sections = ['hero', 'shop', 'collections', 'mission', 'hiw', 'tiers'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dot = document.querySelector(`.snap-dot[data-sec="${id}"]`);
+    if (dot) dot.classList.toggle('active', rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2);
+  });
+}, { passive: true });
+
+
+// --- PREMIUM LOADER ---
+function initLoader(){
+  const pct=document.querySelector('#loader .pct');
+  const bar=document.querySelector('#loader .progress-bar');
+  const loader=document.getElementById('loader');
+  const pContainer=document.getElementById('pContainer');
+  
+  // High-end vocabulary
+  const statusMsgs = [
+    'Securing direct paths...',
+    'Curating artisan masterpieces...',
+    'Syncing with local cooperatives...',
+    'Bespoke craftsmanship incoming...',
+    'Unveiling the heart of the hills...'
+  ];
+  
+  // Particle generator
+  for(let i=0; i<35; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100 + '%';
+    p.style.top = Math.random()*100 + '%';
+    const size = Math.random()*2 + 1 + 'px';
+    p.style.width = size; p.style.height = size;
+    p.style.animationDelay = Math.random()*4 + 's';
+    p.style.animationDuration = Math.random()*3 + 3 + 's';
+    pContainer.appendChild(p);
+  }
+
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*(p > 85 ? 1 : 8);
+    if(p>100)p=100;
+    
+    bar.style.width = p + '%';
+    const msgIdx = Math.min(Math.floor((p/100) * statusMsgs.length), statusMsgs.length - 1);
+    pct.textContent = statusMsgs[msgIdx] + ' ' + Math.floor(p) + '%';
+    
+    if(p>=100){
+      clearInterval(iv);
+      endLoader();
+    }
+  }, 30);
+
+  // Safety Timeout: Force loader close after 3s
+  setTimeout(endLoader, 3000);
+
+  // Global Emergency Show: Force all elements visible after 4.5s (fallback)
+  setTimeout(() => {
+    document.body.classList.add('force-show');
+    console.log('Emergency visibility triggered.');
+  }, 4500);
+
+  function endLoader(){
+    if(loader.classList.contains('exit')) return;
+    loader.classList.add('exit');
+    setTimeout(()=>{
+      loader.classList.add('done');
+      document.getElementById('cbarT')?.classList.add('hide-t');
+      document.getElementById('cbarB')?.classList.add('hide-b');
+      // Force reveal hero and navigation
+      document.querySelectorAll('.hero-c > *, #nav').forEach(el=>el.classList.add('show'));
+    }, 600);
+  }
+}
+
+// --- KEYBOARD ---
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.getElementById('searchOv').classList.remove('open');
+    document.getElementById('cartPanel').classList.remove('open');
+    document.getElementById('cartOv').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+  }
+});
+
+// --- RESIZE ---
+window.addEventListener('resize',()=>{
+  if(renderer){renderer.setSize(window.innerWidth,window.innerHeight);camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix()}
+});
+
+
+// --- INIT ---
+document.addEventListener('DOMContentLoaded',()=>{
+  initLoader();
+  renderFilters();
+  renderProducts(PRODUCTS);
+  renderTicker();
+  renderTestimonials();
+  renderCart();
+  updateWishUI();
+  initThree();
+  initHeroObs();
+  splitTextAll();
+  initReveals();
+  initStatCounters();
+});
+</script>
+</body>
+</html>

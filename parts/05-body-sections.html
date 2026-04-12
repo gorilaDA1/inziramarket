@@ -1,0 +1,93 @@
+<!-- SHOP SECTION -->
+<section class="sec" id="shop">
+  <div class="sec-h rev"><h2 data-split>The Artisan Collection</h2><p>Discover authentic Rwandan treasures - handcrafted by masters, delivered with love.</p><div class="line"></div></div>
+  <div class="shop-controls rev d1">
+    <div class="filter-pills" id="filterPills"></div>
+    <select class="sort-sel" id="sortSel" onchange="sortProducts(this.value)">
+      <option value="featured">Featured</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+      <option value="newest">Newest</option>
+      <option value="rated">Best Rated</option>
+    </select>
+  </div>
+  <div class="pgrid" id="productGrid"></div>
+</section>
+
+<!-- FEATURED COLLECTIONS -->
+<section class="coll-sec" id="collections">
+  <div class="coll-grid">
+    <div class="coll-left rev">
+      <h2 data-split>Bespoke Collections</h2>
+      <p style="color:rgba(255,255,255,.6);margin-bottom:2rem;font-size:.9rem">Explore handpicked selections that celebrate Rwanda's finest offerings.</p>
+      <div class="coll-card rev d1" onclick="filterProducts('Coffee');goSec('shop')"><div><h4>The Coffee Trail</h4><p>Single origin, farm-to-cup excellence</p></div></div>
+      <div class="coll-card rev d2" onclick="filterProducts('Crafts');goSec('shop')"><div><h4>Artisan Quarter</h4><p>Handwoven, carved, and painted treasures</p></div></div>
+      <div class="coll-card rev d3" onclick="filterProducts('Food');goSec('shop')"><div><h4>Farm Direct</h4><p>Organic honey, spices, and natural goods</p></div></div>
+      <div class="coll-card rev d4" onclick="showToast('Global Rwanda collection coming soon!')"><div><h4>Global Rwanda</h4><p>Best sellers loved worldwide</p></div></div>
+    </div>
+    <div class="coll-right rev d2">
+      <div class="coll-mini"><h4>Rwandan Single Origin</h4><p>From $18.99</p></div>
+      <div class="coll-mini"><h4>Agaseke Baskets</h4><p>From $45.00</p></div>
+      <div class="coll-mini"><h4>Pure Honey</h4><p>From $16.00</p></div>
+      <div class="coll-mini"><h4>Ankara Fashion</h4><p>From $65.00</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT & STORIES -->
+<section class="sec" id="mission">
+  <div class="sec-h rev"><h2 data-split>The Inzira Impact</h2><p>Connecting conscious buyers with master makers. Your purchase fuels Rwandan dreams.</p><div class="line"></div></div>
+  <div class="impact-grid">
+    <div class="impact-stats rev">
+      <div class="imp-stat"><div class="num" data-target="3200">0</div><div class="lab">Farmers Empowered</div></div>
+      <div class="imp-stat"><div class="num" data-target="68">0</div><div class="lab">% More Income to Makers</div></div>
+      <div class="imp-stat"><div class="num" data-target="42">0</div><div class="lab">Countries Reached</div></div>
+      <div class="imp-stat"><div class="num" data-target="180">0</div><div class="lab">Active Sellers</div></div>
+    </div>
+    <div class="rev d2">
+      <div class="story-card"><q>Inzira gave my art a global stage. My imigongo pieces now hang in homes across Europe and America.</q><div class="author"><div class="av">A</div><div><div class="aname">Annonciata Cyuzuzo</div><div class="arole">Imigongo Artist, Nyanza</div></div></div></div>
+      <div class="story-card"><q>Our cooperative's income increased by 68% since joining Inzira. We can now invest in better processing equipment.</q><div class="author"><div class="av">J</div><div><div class="aname">Jean-Baptiste Nzeyimana</div><div class="arole">Coffee Cooperative Lead, Huye</div></div></div></div>
+      <div class="story-card"><q>My baskets used to sell only at the local market. Now I ship to 15 countries. My daughters are in school because of Inzira.</q><div class="author"><div class="av">M</div><div><div class="aname">Mukamana Marie</div><div class="arole">Master Weaver, Rwamagana</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="hiw" style="background:var(--cream2)">
+  <div class="sec-h rev"><h2>How It Works</h2><p>From Rwanda's makers to your doorstep - simple, direct, and fair.</p><div class="line"></div></div>
+  <div class="hiw-grid">
+    <div class="hiw-step rev d1"><div class="hiw-num">1</div><h4>Discover</h4><p>Browse verified products from Rwanda's best makers and farmers.</p></div>
+    <div class="hiw-step rev d2"><div class="hiw-num">2</div><h4>Order</h4><p>Pay securely with MTN MoMo, Visa, PayPal, or bank transfer.</p></div>
+    <div class="hiw-step rev d3"><div class="hiw-num">3</div><h4>Maker Ships</h4><p>Your order goes directly to the maker who carefully packs and ships it.</p></div>
+    <div class="hiw-step rev d4"><div class="hiw-num">4</div><h4>Delivered</h4><p>Track your package from Kigali to your door - anywhere in the world.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS TICKER -->
+<section class="sec" id="testSec">
+  <div class="sec-h rev"><h2>What Buyers Say</h2><p>Join thousands of happy customers discovering Rwanda.</p><div class="line"></div></div>
+  <div class="test-wrap"><div class="test-track" id="testTrack"></div></div>
+</section>
+
+<!-- SELLER TIERS -->
+<section class="tier-sec" id="tiers">
+  <h2 class="rev">Start Selling on Inzira</h2>
+  <p class="rev d1">Choose the plan that fits your business. Grow from local to global.</p>
+  <div class="tier-grid">
+    <div class="tier-card rev d1">
+      <div class="tier-name">Starter</div><div class="tier-price">Free</div>
+      <div class="tier-feat">List up to 10 products</div><div class="tier-feat">Basic analytics</div><div class="tier-feat">Community support</div><div class="tier-feat">Local delivery only</div>
+      <div class="tier-btn" onclick="showToast('Starter plan sign up coming soon!')">Get Started Free</div>
+    </div>
+    <div class="tier-card featured rev d2">
+      <div class="tier-name">Growth</div><div class="tier-price">RWF 15,000/mo</div>
+      <div class="tier-feat">Unlimited products</div><div class="tier-feat">Advanced analytics</div><div class="tier-feat">Priority support</div><div class="tier-feat">Africa-wide delivery</div><div class="tier-feat">Promotional features</div>
+      <div class="tier-btn" onclick="showToast('Growth plan - Coming soon!')">Upgrade to Growth</div>
+    </div>
+    <div class="tier-card rev d3">
+      <div class="tier-name">Premium</div><div class="tier-price">RWF 35,000/mo</div>
+      <div class="tier-feat">Everything in Growth</div><div class="tier-feat">Global shipping</div><div class="tier-feat">Dedicated account manager</div><div class="tier-feat">Featured placement</div><div class="tier-feat">Bulk export tools</div>
+      <div class="tier-btn" onclick="showToast('Premium plan sign up coming soon!')">Go Premium</div>
+    </div>
+  </div>
+</section>

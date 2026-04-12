@@ -1,0 +1,51 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// --- PRODUCT DATA ---
+{id:1,img:'assets/prod_1.png',name:'Rwandan Single Origin Coffee',seller:'Dukunde Kawa Coop',price:18.99,cat:'Coffee',stars:5,reviews:247,badge:'verified'},
+{id:2,img:'assets/prod_2.png',name:'Hand-woven Imigongo Wall Art',seller:'Gasabo Arts',price:89.00,cat:'Crafts',stars:5,reviews:89,badge:'top'},
+{id:3,img:'assets/prod_tea.png',name:'Rwanda Mountain Tea',seller:'Sorwathe Estate',price:12.50,cat:'Coffee',stars:4.5,reviews:163,badge:'verified'},
+{id:4,img:'assets/prod_4.png',name:'Traditional Agaseke Basket Set',seller:'Nyamata Weavers',price:45.00,cat:'Crafts',stars:5,reviews:201,badge:'top'},
+{id:5,img:'assets/prod_5.jpg',name:'Pure Rwandan Honey',seller:'Nyungwe Apiaries',price:16.00,cat:'Food',stars:5,reviews:318,badge:'verified'},
+{id:6,img:'assets/prod_6.jpg',name:'Ankara Print Dress',seller:'Kigali Fashion House',price:65.00,cat:'Fashion',stars:4.5,reviews:74,badge:'new'},
+{id:7,img:'assets/prod_7.jpg',name:'Volcanic Soil Face Mask',seller:'Virunga Naturals',price:22.00,cat:'Skincare',stars:5,reviews:156,badge:'verified'},
+{id:8,img:'assets/prod_8.png',name:'Hand-carved Wooden Giraffe',seller:'Kimironko Crafters',price:38.00,cat:'Crafts',stars:4,reviews:92,badge:'verified'},
+{id:9,img:'assets/prod_9.png',name:'Rwandan Chili Hot Sauce 3-Pack',seller:'Kigali Spice Co',price:24.00,cat:'Food',stars:5,reviews:441,badge:'top'},
+{id:10,img:'assets/prod_10.jpg',name:'Sisal Shoulder Bag',seller:'Lake Kivu Artisans',price:52.00,cat:'Fashion',stars:4.5,reviews:67,badge:'verified'},
+{id:11,img:'assets/prod_11.png',name:'Organic Moringa Powder',seller:'Green Hills Rwanda',price:19.00,cat:'Skincare',stars:5,reviews:283,badge:'verified'},
+{id:12,img:'assets/prod_fashion.png',name:'Batik Table Runner 2m',seller:'Nyamirambo Creative',price:29.00,cat:'Home',stars:4,reviews:55,badge:'new'},
+{id:13,img:'assets/prod_13.jpg',name:'Copper Wire Jewelry Set',seller:'Kigali Metalworks',price:48.00,cat:'Jewelry',stars:5,reviews:118,badge:'top'},
+{id:14,img:'assets/prod_14.jpg',name:'Dried Hibiscus 1kg',seller:'Bugesera Farms',price:14.00,cat:'Food',stars:4.5,reviews:209,badge:'verified'},
+{id:15,img:'assets/prod_15.jpg',name:'Traditional Inanga Instrument',seller:'Rwanda Music Arts',price:120.00,cat:'Crafts',stars:5,reviews:34,badge:'verified'},
+{id:16,img:'assets/prod_16.jpg',name:'Handmade Leather Sandals',seller:'Huye Leather Guild',price:55.00,cat:'Fashion',stars:5,reviews:88,badge:'verified'},
+{id:17,img:'assets/prod_17.jpg',name:'Rwanda Arabica Whole Beans 1kg',seller:'Rulindo Farmers',price:32.00,cat:'Coffee',stars:5,reviews:195,badge:'top'},
+{id:18,img:'assets/prod_honey.png',name:'Beeswax Candle Set (6)',seller:'Akagera Crafts',price:28.00,cat:'Home',stars:4.5,reviews:76,badge:'new'},
+{id:19,img:'assets/prod_basket.png',name:'Woven Placemat Set (4)',seller:'Rwamagana Weavers',price:22.00,cat:'Home',stars:5,reviews:143,badge:'verified'},
+{id:20,img:'assets/prod_20.jpg',name:'Black Soap with Shea',seller:'Musanze Naturals',price:18.00,cat:'Skincare',stars:5,reviews:267,badge:'top'},
+{id:21,img:'assets/prod_21.jpg',name:'Ceramic Coffee Set (4 cups)',seller:'Kigali Pottery',price:68.00,cat:'Home',stars:4.5,reviews:49,badge:'new'},
+{id:22,img:'assets/prod_honey.png',name:'Dried Chili Pepper Mix 500g',seller:'Nyagatare Spices',price:11.00,cat:'Food',stars:4,reviews:321,badge:'verified'},
+{id:23,img:'assets/prod_23.jpg',name:'Beaded Necklace Handmade',seller:'Karongi Jewelers',price:42.00,cat:'Jewelry',stars:5,reviews:97,badge:'verified'},
+{id:24,img:'assets/prod_24.jpg',name:'Pure Pyrethrum Extract',seller:'Eastern Farms Coop',price:35.00,cat:'Agriculture',stars:4.5,reviews:61,badge:'verified'}
+];
+
+const TESTIMONIALS=[
+{name:'Sarah K.',loc:'London, UK',text:'The imigongo art I ordered is breathtaking. The quality rivals pieces I\'ve seen in top London galleries. Absolutely worth every penny.',stars:5},
+{name:'Marcus T.',loc:'New York, USA',text:'I order Rwandan coffee monthly now. Nothing else compares. The freshness, the flavor - it\'s transformed my morning routine.',stars:5},
+{name:'Amina D.',loc:'Nairobi, Kenya',text:'The Ankara dress is stunning! Perfect fit, beautiful print. Rwanda\'s fashion scene is seriously underrated.',stars:5},
+{name:'Pierre M.',loc:'Paris, France',text:'Sent Agaseke baskets as gifts. My family was amazed by the craftsmanship. Each one is truly a work of art.',stars:5},
+{name:'Jennifer W.',loc:'Toronto, Canada',text:'Discovered Rwandan honey on Inzira and I\'m hooked. Pure, rich, and you can taste the difference. Supporting farmers directly is a bonus!',stars:5},
+{name:'David L.',loc:'Berlin, Germany',text:'As a cafe owner, I need quality beans. Rwandan Arabica from Rulindo is now our house blend. Customers love it.',stars:5},
+{name:'Fatima A.',loc:'Dubai, UAE',text:'I now have 4 imigongo pieces. The geometric patterns are mesmerizing. Inzira makes buying from Rwanda so easy.',stars:5},
+{name:'Luca B.',loc:'Milan, Italy',text:'First time buying from Rwanda. The leather sandals are premium quality - equal to Italian craftsmanship. I\'m impressed.',stars:5}
+];
+
+const CATEGORIES=['All','Coffee','Crafts','Fashion','Food','Skincare','Jewelry','Home','Agriculture'];
+const TICKER_ITEMS=['Coffee and Tea','Crafts and Art','Fashion','Food and Honey','Jewelry','Skincare','Home Decor','Agriculture','Wholesale','Ships Worldwide'];
+
+// --- APP STATE ---
+const AppState={
+  cart:JSON.parse(localStorage.getItem('inzira_cart')||'[]'),
+  wishlist:JSON.parse(localStorage.getItem('inzira_wish')||'[]'),
+  currency:'USD',language:'EN',searchQuery:'',activeFilter:'All',sortBy:'featured',products:[...PRODUCTS]
+};
+function saveState(){localStorage.setItem('inzira_cart',JSON.stringify(AppState.cart));localStorage.setItem('inzira_wish',JSON.stringify(AppState.wishlist))}
+</script>

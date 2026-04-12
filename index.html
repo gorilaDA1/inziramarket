@@ -7,7 +7,8 @@
 <meta name="description" content="Premium marketplace connecting Rwanda's farmers, artisans and makers directly to local and international buyers. No middlemen. Fair pay.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<!-- Favicon Base64 for Max Compatibility -->
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+PGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iMzgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0Q0QTAxNyIgc3Ryb2tlLXdpZHRoPSIzIiAvPjxwYXRoIGQ9Ik00MCAyMEM0MCAyMCAyOCAyNiAyOCA0MEMyOCA1NCA1MiA1NCA1MiA0MEM1MiAyNiA0MCAyMCA0MCAyMFoiIGZpbGw9IiNENEEwMTciIC8+PGNpcmNsZSBjeD0iNTIiIGN5PSIyNiIgcj0iNSIgZmlsbD0iI0D0QTAxNyIgLz48L3N2Zz4=">
 <style>
 :root{--green-deep:#1B4332;--green-mid:#2D6A4F;--green-light:#52B788;--gold:#D4A017;--gold-light:#F0C040;--red:#E63946;--cream:#FDF8F0;--cream2:#F5EFE0;--charcoal:#1A1A2E;--grey:#6B7280;--white:#FFFFFF;--ff-d:'Playfair Display',Georgia,serif;--ff-b:'DM Sans',system-ui,sans-serif;--ff-m:'DM Mono',monospace;--ease:.35s cubic-bezier(.22,1,.36,1)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -352,7 +353,7 @@ input,select{font-family:inherit;outline:none}
 
 /* REVEAL */
 .rev{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s cubic-bezier(.22,1,.36,1)}
-.rev.show{opacity:1;transform:translateY(0)}
+.rev.show, .force-show .rev{opacity:1 !important;transform:translateY(0) !important;transition:none !important}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
 
 /* MOBILE BOTTOM NAV */
@@ -529,20 +530,20 @@ input,select{font-family:inherit;outline:none}
   <div class="float-label fl-3 rev d3">Fair Trade Certified</div>
   <div class="float-label fl-4 rev d4">Secure Payments</div>
   <div class="hero-c">
-    <div class="trust-badge rev">Rwanda's Premier Direct-to-Consumer Platform</div>
-    <h1 class="hero-h1 rev" id="heroH1" data-split>Rwanda's Finest Crafts, Curated for the World</h1>
-    <p class="hero-sub rev d2">Connecting Rwanda's master artisans and organic farmers directly to your doorstep. Every purchase empowers a makers' community.</p>
-    <div class="hero-btns rev d3">
+    <div class="trust-badge">Rwanda's Premier Direct-to-Consumer Platform</div>
+    <h1 class="hero-h1" id="heroH1" data-split>Rwanda's Finest Crafts, Curated for the World</h1>
+    <p class="hero-sub d2">Connecting Rwanda's master artisans and organic farmers directly to your doorstep. Every purchase empowers a makers' community.</p>
+    <div class="hero-btns d3">
       <button class="btn-p" onclick="goSec('shop')">Shop Collection</button>
       <button class="btn-g" onclick="goSec('mission')">The Inzira Story</button>
     </div>
-    <div class="stats-bar rev d4">
+    <div class="stats-bar d4">
       <div class="stat-item"><div class="stat-num" data-target="2400">0</div><div class="stat-lab">Products</div></div>
       <div class="stat-item"><div class="stat-num" data-target="180">0</div><div class="stat-lab">Verified Sellers</div></div>
       <div class="stat-item"><div class="stat-num" data-target="42">0</div><div class="stat-lab">Countries</div></div>
       <div class="stat-item"><div class="stat-num" data-target="100">0</div><div class="stat-lab">Authentic</div></div>
     </div>
-    <div class="scroll-ind rev d5"><span>Scroll</span><div class="line"></div></div>
+    <div class="scroll-ind d5"><span>Scroll</span><div class="line"></div></div>
   </div>
 </section>
 
@@ -706,10 +707,9 @@ input,select{font-family:inherit;outline:none}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 // --- PRODUCT DATA ---
-const PRODUCTS=[
-{id:1,img:'assets/prod_1.jpg',name:'Rwandan Single Origin Coffee',seller:'Dukunde Kawa Coop',price:18.99,cat:'Coffee',stars:5,reviews:247,badge:'verified'},
+{id:1,img:'assets/prod_1.png',name:'Rwandan Single Origin Coffee',seller:'Dukunde Kawa Coop',price:18.99,cat:'Coffee',stars:5,reviews:247,badge:'verified'},
 {id:2,img:'assets/prod_2.png',name:'Hand-woven Imigongo Wall Art',seller:'Gasabo Arts',price:89.00,cat:'Crafts',stars:5,reviews:89,badge:'top'},
-{id:3,img:'assets/prod_3.jpg',name:'Rwanda Mountain Tea',seller:'Sorwathe Estate',price:12.50,cat:'Coffee',stars:4.5,reviews:163,badge:'verified'},
+{id:3,img:'assets/prod_tea.png',name:'Rwanda Mountain Tea',seller:'Sorwathe Estate',price:12.50,cat:'Coffee',stars:4.5,reviews:163,badge:'verified'},
 {id:4,img:'assets/prod_4.png',name:'Traditional Agaseke Basket Set',seller:'Nyamata Weavers',price:45.00,cat:'Crafts',stars:5,reviews:201,badge:'top'},
 {id:5,img:'assets/prod_5.jpg',name:'Pure Rwandan Honey',seller:'Nyungwe Apiaries',price:16.00,cat:'Food',stars:5,reviews:318,badge:'verified'},
 {id:6,img:'assets/prod_6.jpg',name:'Ankara Print Dress',seller:'Kigali Fashion House',price:65.00,cat:'Fashion',stars:4.5,reviews:74,badge:'new'},
@@ -814,32 +814,33 @@ function updateWishUI(){
 // --- PRODUCTS ---
 function renderProducts(list){
   const grid=document.getElementById('productGrid');
-  grid.style.opacity='0';grid.style.transform='translateY(15px)';
-  setTimeout(()=>{
-    grid.innerHTML=list.map((p,i)=>{
-      const starStr=getStars(p.stars);
-      const bclass=p.badge==='verified'?'verified':p.badge==='new'?'new':'top';
-      const btxt=p.badge==='verified'?'Verified':p.badge==='new'?'NEW':'BEST SELLER';
-      return `<div class="pcard rev" style="--i:${i}">
-        <div class="pcard-img"><img src="${p.img}" alt="${p.name}" class="pimg"><div class="qv">Quick View</div></div>
-        <button class="pcard-wish" data-id="${p.id}" onclick="event.stopPropagation();toggleWish(${p.id})">${AppState.wishlist.includes(p.id)?'Saved':'Save'}</button>
-        <div class="pcard-badge ${bclass}">${btxt}</div>
-        <div class="pcard-body">
-          <div class="pcard-cat">${p.cat}</div>
-          <div class="pcard-name">${p.name}</div>
-          <div class="pcard-seller">${p.seller}</div>
-          <div class="pcard-stars">${starStr} <span>(${p.reviews})</span></div>
-          <div class="pcard-bottom">
-            <div class="pcard-price">$${p.price.toFixed(2)}</div>
-            <button class="pcard-add" onclick="addToCart(${p.id})">
-              Add
-            </button>
-          </div>
+  if(!grid) return;
+  // Render instantly without delays or hidden animation states
+  grid.innerHTML=list.map((p,i)=>{
+    const starStr=getStars(p.stars);
+    const bclass=p.badge==='verified'?'verified':p.badge==='new'?'new':'top';
+    const btxt=p.badge==='verified'?'Verified':p.badge==='new'?'NEW':'BEST SELLER';
+    return `<div class="pcard">
+      <div class="pcard-img"><img src="${p.img}" alt="${p.name}" class="pimg"><div class="qv">Quick View</div></div>
+      <button class="pcard-wish" data-id="${p.id}" onclick="event.stopPropagation();toggleWish(${p.id})">${AppState.wishlist.includes(p.id)?'Saved':'Save'}</button>
+      <div class="pcard-badge ${bclass}">${btxt}</div>
+      <div class="pcard-body">
+        <div class="pcard-cat">${p.cat}</div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-seller">${p.seller}</div>
+        <div class="pcard-stars">${starStr} <span>(${p.reviews})</span></div>
+        <div class="pcard-bottom">
+          <div class="pcard-price">$${p.price.toFixed(2)}</div>
+          <button class="pcard-add" onclick="addToCart(${p.id})">
+            Add
+          </button>
         </div>
-      </div>`}).join('');
-    grid.style.opacity='1';grid.style.transform='translateY(0)';grid.style.transition='opacity .4s, transform .4s';
-    setTimeout(initReveals,100);
-  },150);
+      </div>
+    </div>`}).join('');
+  grid.style.opacity='1';
+  grid.style.transform='none';
+  // Re-init reveals for any other elements if needed
+  if(typeof initReveals === 'function') setTimeout(initReveals, 100);
 }
 function getStars(n){return 'Rating: ' + n + '/5'}
 
@@ -1146,16 +1147,30 @@ function initLoader(){
     
     if(p>=100){
       clearInterval(iv);
-      setTimeout(()=>{
-        loader.classList.add('exit');
-        setTimeout(()=>{
-          loader.classList.add('done');
-          document.getElementById('cbarT').classList.add('hide-t');
-          document.getElementById('cbarB').classList.add('hide-b');
-        }, 600);
-      }, 200);
+      endLoader();
     }
   }, 30);
+
+  // Safety Timeout: Force loader close after 3s
+  setTimeout(endLoader, 3000);
+
+  // Global Emergency Show: Force all elements visible after 4.5s (fallback)
+  setTimeout(() => {
+    document.body.classList.add('force-show');
+    console.log('Emergency visibility triggered.');
+  }, 4500);
+
+  function endLoader(){
+    if(loader.classList.contains('exit')) return;
+    loader.classList.add('exit');
+    setTimeout(()=>{
+      loader.classList.add('done');
+      document.getElementById('cbarT')?.classList.add('hide-t');
+      document.getElementById('cbarB')?.classList.add('hide-b');
+      // Force reveal hero and navigation
+      document.querySelectorAll('.hero-c > *, #nav').forEach(el=>el.classList.add('show'));
+    }, 600);
+  }
 }
 
 // --- KEYBOARD ---
