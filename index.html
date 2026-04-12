@@ -7,6 +7,7 @@
 <meta name="description" content="Premium marketplace connecting Rwanda's farmers, artisans and makers directly to local and international buyers. No middlemen. Fair pay.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <style>
 :root{--green-deep:#1B4332;--green-mid:#2D6A4F;--green-light:#52B788;--gold:#D4A017;--gold-light:#F0C040;--red:#E63946;--cream:#FDF8F0;--cream2:#F5EFE0;--charcoal:#1A1A2E;--grey:#6B7280;--white:#FFFFFF;--ff-d:'Playfair Display',Georgia,serif;--ff-b:'DM Sans',system-ui,sans-serif;--ff-m:'DM Mono',monospace;--ease:.35s cubic-bezier(.22,1,.36,1)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -26,19 +27,37 @@ input,select{font-family:inherit;outline:none}
 /* Scroll Progress */
 #scrollProg{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--green-mid),var(--gold));z-index:10000;width:0;transition:none}
 
-/* LOADER */
-#loader{position:fixed;inset:0;background:var(--charcoal);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s}
-#loader .flag{font-size:1rem;color:var(--cream);opacity:0;animation:fadeIn .6s .2s forwards;margin-bottom:1.2rem;font-family:var(--ff-b);letter-spacing:2px}
-#loader .logo{font-family:var(--ff-d);font-size:3.2rem;color:var(--white);clip-path:inset(0 100% 0 0);animation:clipReveal 1s .5s forwards}
-#loader .logo span{color:var(--gold)}
-#loader .tag{font-family:var(--ff-b);color:var(--grey);font-size:.85rem;letter-spacing:3px;text-transform:uppercase;opacity:0;transform:translateY(12px);animation:fadeUp .6s 1s forwards;margin-top:.6rem}
-#loader .bar-wrap{width:220px;height:2px;background:rgba(255,255,255,.1);margin-top:2rem;border-radius:2px;overflow:hidden}
-#loader .bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green-light),var(--gold));animation:fillBar 2.5s .8s forwards}
-#loader .pct{font-family:var(--ff-m);color:var(--gold);font-size:.75rem;margin-top:.6rem;opacity:0;animation:fadeIn .3s .8s forwards}
+/* ADVANCED PREMIUM LOADER */
+#loader{position:fixed;inset:0;background:#06060A;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s, visibility .8s;overflow:hidden}
+#loader.done{opacity:0;visibility:hidden}
+
+.p-container{position:absolute;inset:0;pointer-events:none;z-index:1}
+.particle{position:absolute;background:white;border-radius:50%;opacity:0;animation:floatParticle 4s ease-in-out infinite}
+
+#loader .l-wrap{position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;transform:translateY(-10px)}
+#loader .flag{font-size:.6rem;color:var(--gold);opacity:0;margin-bottom:2rem;font-family:var(--ff-m);letter-spacing:6px;text-transform:uppercase;animation:fadeReveal .5s .1s forwards}
+
+#loader .logo-svg{width:260px;height:auto;overflow:visible}
+#loader .logo-circle{stroke-dasharray:240;stroke-dashoffset:240;animation:strokeDraw 0.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards, pulse-glow 2s 1s ease-in-out infinite;stroke:var(--gold);stroke-width:1.2}
+#loader .logo-path{opacity:0;fill:var(--white);transform:scale(0.8);transform-origin:center;animation:scalePop 0.6s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards}
+
+/* Letter Spans */
+.l-char{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(10px);animation:charReveal 0.4s forwards;fill:var(--white)}
+
+#loader .tag{font-family:var(--ff-b);color:rgba(255,255,255,0.4);font-size:.65rem;letter-spacing:4px;text-transform:uppercase;opacity:0;margin-top:1.8rem;animation:fadeReveal 0.5s 0.8s forwards}
+#loader .progress-container{position:absolute;bottom:0;left:0;width:100%;height:1px;background:rgba(255,255,255,0.03)}
+#loader .progress-bar{height:100%;width:0;background:var(--gold);transition:width 0.4s cubic-bezier(0.1, 0.5, 0.5, 1);box-shadow:0 0 10px var(--gold)}
+#loader .pct{position:absolute;bottom:50px;font-family:var(--ff-m);color:rgba(255,255,255,0.25);font-size:.6rem;letter-spacing:3px;opacity:0;animation:fadeIn .5s 0.5s forwards}
+
+@keyframes floatParticle{0%{opacity:0;transform:translateY(0) scale(0)}20%{opacity:0.4}80%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1)}}
+@keyframes charReveal{to{opacity:1;filter:blur(0);transform:translateY(0)}}
+@keyframes pulse-glow{0%,100%{stroke-opacity:1;stroke-width:1.2}50%{stroke-opacity:0.5;stroke-width:2;filter:drop-shadow(0 0 5px var(--gold))}}
+
+@keyframes fadeReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes strokeDraw{to{stroke-dashoffset:0}}
+@keyframes scalePop{to{opacity:1;transform:scale(1)}}
 @keyframes fadeIn{to{opacity:1}}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-@keyframes clipReveal{to{clip-path:inset(0 0 0 0)}}
-@keyframes fillBar{to{width:100%}}
+
 
 /* Cinematic bars */
 .cbar{position:fixed;left:0;right:0;height:60px;background:var(--charcoal);z-index:9998;transition:transform .8s var(--ease) .1s}
@@ -168,7 +187,7 @@ input,select{font-family:inherit;outline:none}
 .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
 .pcard{background:var(--white);border-radius:12px;overflow:hidden;transition:transform var(--ease),box-shadow var(--ease);position:relative}
 .pcard:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
-.pcard-img{height:200px;display:flex;align-items:center;justify-content:center;background:var(--cream2);font-size:4rem;position:relative;overflow:hidden;transition:var(--ease)}
+.pcard-img{height:200px;display:flex;align-items:center;justify-content:center;background:var(--cream2);font-size:1.2rem;position:relative;overflow:hidden;transition:var(--ease);text-align:center;padding:1rem;color:var(--grey)}
 .pcard:hover .pcard-img .emoji{transform:scale(1.08)}
 .pcard-img .emoji{transition:transform var(--ease)}
 .pcard-img .qv{position:absolute;bottom:10px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--charcoal);color:#fff;font-size:.7rem;padding:6px 14px;border-radius:6px;transition:all var(--ease);pointer-events:none}
@@ -374,20 +393,32 @@ input,select{font-family:inherit;outline:none}
 
 <!-- Loader -->
 <div id="loader">
-  <div class="flag">Made in Rwanda</div>
-  <div class="logo">
-    <svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-white">
-      <defs><linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D4A017"/><stop offset="100%" stop-color="#F1C40F"/></linearGradient></defs>
-      <circle cx="30" cy="30" r="28" stroke="#FFFFFF" stroke-width="2.5" />
-      <path d="M30 12C30 12 18 18 18 30C18 42 42 42 42 30C42 18 30 12 30 12Z" fill="#FFFFFF" />
-      <circle cx="42" cy="18" r="4" fill="#FFFFFF" />
-      <text x="70" y="38" font-family="'Playfair Display', serif" font-size="34" font-weight="900" fill="#FFFFFF">INZIRA</text>
-      <text x="71" y="52" font-family="'DM Sans', sans-serif" font-size="11" font-weight="600" letter-spacing="6" fill="#FFFFFF" opacity="0.8">MARKET</text>
-    </svg>
+  <div class="p-container" id="pContainer"></div>
+  <div class="l-wrap">
+    <div class="flag">Curating Authenticity</div>
+    <div class="logo">
+      <svg class="logo-svg" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="logo-circle" cx="40" cy="40" r="38" fill="none" />
+        <path class="logo-path" d="M40 20C40 20 28 26 28 40C28 54 52 54 52 40C52 26 40 20 40 20Z" />
+        <circle class="logo-path" cx="52" cy="26" r="5" />
+        <g id="logoTextGroup">
+          <!-- Text will be injected with spans for animation -->
+          <text x="90" y="50" font-family="'Playfair Display', serif" font-size="42" font-weight="900">
+            <tspan class="l-char" style="animation-delay:0.3s">I</tspan>
+            <tspan class="l-char" style="animation-delay:0.35s">N</tspan>
+            <tspan class="l-char" style="animation-delay:0.4s">Z</tspan>
+            <tspan class="l-char" style="animation-delay:0.45s">I</tspan>
+            <tspan class="l-char" style="animation-delay:0.5s">R</tspan>
+            <tspan class="l-char" style="animation-delay:0.55s">A</tspan>
+          </text>
+          <text class="logo-text" x="91" y="68" font-family="'DM Sans', sans-serif" font-size="10" font-weight="600" letter-spacing="10" opacity="0.4" style="animation:fadeIn 0.5s 0.8s forwards">MARKET</text>
+        </g>
+      </svg>
+    </div>
+    <div class="tag">Preserving Heritage &bull; Empowering Makers &bull; Connecting Worlds</div>
   </div>
-  <div class="tag">From Rwanda's Heart - To The World</div>
-  <div class="bar-wrap"><div class="bar-fill"></div></div>
-  <div class="pct">0%</div>
+  <div class="pct">Initializing Premium Experience...</div>
+  <div class="progress-container"><div class="progress-bar"></div></div>
 </div>
 
 <!-- Cinematic Bars -->
@@ -676,30 +707,30 @@ input,select{font-family:inherit;outline:none}
 <script>
 // --- PRODUCT DATA ---
 const PRODUCTS=[
-{id:1,img:'assets/prod_coffee.png',name:'Rwandan Single Origin Coffee',seller:'Dukunde Kawa Coop',price:18.99,cat:'Coffee',stars:5,reviews:247,badge:'verified'},
-{id:2,img:'assets/prod_basket.png',name:'Hand-woven Imigongo Wall Art',seller:'Gasabo Arts',price:89.00,cat:'Crafts',stars:5,reviews:89,badge:'top'},
-{id:3,img:'assets/prod_tea.png',name:'Rwanda Mountain Tea',seller:'Sorwathe Estate',price:12.50,cat:'Coffee',stars:4.5,reviews:163,badge:'verified'},
-{id:4,img:'assets/prod_basket.png',name:'Traditional Agaseke Basket Set',seller:'Nyamata Weavers',price:45.00,cat:'Crafts',stars:5,reviews:201,badge:'top'},
-{id:5,img:'assets/prod_honey.png',name:'Pure Rwandan Honey',seller:'Nyungwe Apiaries',price:16.00,cat:'Food',stars:5,reviews:318,badge:'verified'},
-{id:6,img:'assets/prod_fashion.png',name:'Ankara Print Dress',seller:'Kigali Fashion House',price:65.00,cat:'Fashion',stars:4.5,reviews:74,badge:'new'},
-{id:7,img:'assets/prod_tea.png',name:'Volcanic Soil Face Mask',seller:'Virunga Naturals',price:22.00,cat:'Skincare',stars:5,reviews:156,badge:'verified'},
-{id:8,img:'assets/prod_basket.png',name:'Hand-carved Wooden Giraffe',seller:'Kimironko Crafters',price:38.00,cat:'Crafts',stars:4,reviews:92,badge:'verified'},
-{id:9,img:'assets/prod_honey.png',name:'Rwandan Chili Hot Sauce 3-Pack',seller:'Kigali Spice Co',price:24.00,cat:'Food',stars:5,reviews:441,badge:'top'},
-{id:10,img:'assets/prod_fashion.png',name:'Sisal Shoulder Bag',seller:'Lake Kivu Artisans',price:52.00,cat:'Fashion',stars:4.5,reviews:67,badge:'verified'},
-{id:11,img:'assets/prod_tea.png',name:'Organic Moringa Powder',seller:'Green Hills Rwanda',price:19.00,cat:'Skincare',stars:5,reviews:283,badge:'verified'},
+{id:1,img:'assets/prod_1.jpg',name:'Rwandan Single Origin Coffee',seller:'Dukunde Kawa Coop',price:18.99,cat:'Coffee',stars:5,reviews:247,badge:'verified'},
+{id:2,img:'assets/prod_2.png',name:'Hand-woven Imigongo Wall Art',seller:'Gasabo Arts',price:89.00,cat:'Crafts',stars:5,reviews:89,badge:'top'},
+{id:3,img:'assets/prod_3.jpg',name:'Rwanda Mountain Tea',seller:'Sorwathe Estate',price:12.50,cat:'Coffee',stars:4.5,reviews:163,badge:'verified'},
+{id:4,img:'assets/prod_4.png',name:'Traditional Agaseke Basket Set',seller:'Nyamata Weavers',price:45.00,cat:'Crafts',stars:5,reviews:201,badge:'top'},
+{id:5,img:'assets/prod_5.jpg',name:'Pure Rwandan Honey',seller:'Nyungwe Apiaries',price:16.00,cat:'Food',stars:5,reviews:318,badge:'verified'},
+{id:6,img:'assets/prod_6.jpg',name:'Ankara Print Dress',seller:'Kigali Fashion House',price:65.00,cat:'Fashion',stars:4.5,reviews:74,badge:'new'},
+{id:7,img:'assets/prod_7.jpg',name:'Volcanic Soil Face Mask',seller:'Virunga Naturals',price:22.00,cat:'Skincare',stars:5,reviews:156,badge:'verified'},
+{id:8,img:'assets/prod_8.png',name:'Hand-carved Wooden Giraffe',seller:'Kimironko Crafters',price:38.00,cat:'Crafts',stars:4,reviews:92,badge:'verified'},
+{id:9,img:'assets/prod_9.png',name:'Rwandan Chili Hot Sauce 3-Pack',seller:'Kigali Spice Co',price:24.00,cat:'Food',stars:5,reviews:441,badge:'top'},
+{id:10,img:'assets/prod_10.jpg',name:'Sisal Shoulder Bag',seller:'Lake Kivu Artisans',price:52.00,cat:'Fashion',stars:4.5,reviews:67,badge:'verified'},
+{id:11,img:'assets/prod_11.png',name:'Organic Moringa Powder',seller:'Green Hills Rwanda',price:19.00,cat:'Skincare',stars:5,reviews:283,badge:'verified'},
 {id:12,img:'assets/prod_fashion.png',name:'Batik Table Runner 2m',seller:'Nyamirambo Creative',price:29.00,cat:'Home',stars:4,reviews:55,badge:'new'},
-{id:13,img:'assets/prod_basket.png',name:'Copper Wire Jewelry Set',seller:'Kigali Metalworks',price:48.00,cat:'Jewelry',stars:5,reviews:118,badge:'top'},
-{id:14,img:'assets/prod_tea.png',name:'Dried Hibiscus 1kg',seller:'Bugesera Farms',price:14.00,cat:'Food',stars:4.5,reviews:209,badge:'verified'},
-{id:15,img:'assets/prod_basket.png',name:'Traditional Inanga Instrument',seller:'Rwanda Music Arts',price:120.00,cat:'Crafts',stars:5,reviews:34,badge:'verified'},
-{id:16,img:'assets/prod_fashion.png',name:'Handmade Leather Sandals',seller:'Huye Leather Guild',price:55.00,cat:'Fashion',stars:5,reviews:88,badge:'verified'},
-{id:17,img:'assets/prod_coffee.png',name:'Rwanda Arabica Whole Beans 1kg',seller:'Rulindo Farmers',price:32.00,cat:'Coffee',stars:5,reviews:195,badge:'top'},
+{id:13,img:'assets/prod_13.jpg',name:'Copper Wire Jewelry Set',seller:'Kigali Metalworks',price:48.00,cat:'Jewelry',stars:5,reviews:118,badge:'top'},
+{id:14,img:'assets/prod_14.jpg',name:'Dried Hibiscus 1kg',seller:'Bugesera Farms',price:14.00,cat:'Food',stars:4.5,reviews:209,badge:'verified'},
+{id:15,img:'assets/prod_15.jpg',name:'Traditional Inanga Instrument',seller:'Rwanda Music Arts',price:120.00,cat:'Crafts',stars:5,reviews:34,badge:'verified'},
+{id:16,img:'assets/prod_16.jpg',name:'Handmade Leather Sandals',seller:'Huye Leather Guild',price:55.00,cat:'Fashion',stars:5,reviews:88,badge:'verified'},
+{id:17,img:'assets/prod_17.jpg',name:'Rwanda Arabica Whole Beans 1kg',seller:'Rulindo Farmers',price:32.00,cat:'Coffee',stars:5,reviews:195,badge:'top'},
 {id:18,img:'assets/prod_honey.png',name:'Beeswax Candle Set (6)',seller:'Akagera Crafts',price:28.00,cat:'Home',stars:4.5,reviews:76,badge:'new'},
 {id:19,img:'assets/prod_basket.png',name:'Woven Placemat Set (4)',seller:'Rwamagana Weavers',price:22.00,cat:'Home',stars:5,reviews:143,badge:'verified'},
-{id:20,img:'assets/prod_tea.png',name:'Black Soap with Shea',seller:'Musanze Naturals',price:18.00,cat:'Skincare',stars:5,reviews:267,badge:'top'},
-{id:21,img:'assets/prod_coffee.png',name:'Ceramic Coffee Set (4 cups)',seller:'Kigali Pottery',price:68.00,cat:'Home',stars:4.5,reviews:49,badge:'new'},
+{id:20,img:'assets/prod_20.jpg',name:'Black Soap with Shea',seller:'Musanze Naturals',price:18.00,cat:'Skincare',stars:5,reviews:267,badge:'top'},
+{id:21,img:'assets/prod_21.jpg',name:'Ceramic Coffee Set (4 cups)',seller:'Kigali Pottery',price:68.00,cat:'Home',stars:4.5,reviews:49,badge:'new'},
 {id:22,img:'assets/prod_honey.png',name:'Dried Chili Pepper Mix 500g',seller:'Nyagatare Spices',price:11.00,cat:'Food',stars:4,reviews:321,badge:'verified'},
-{id:23,img:'assets/prod_basket.png',name:'Beaded Necklace Handmade',seller:'Karongi Jewelers',price:42.00,cat:'Jewelry',stars:5,reviews:97,badge:'verified'},
-{id:24,img:'assets/prod_tea.png',name:'Pure Pyrethrum Extract',seller:'Eastern Farms Coop',price:35.00,cat:'Agriculture',stars:4.5,reviews:61,badge:'verified'}
+{id:23,img:'assets/prod_23.jpg',name:'Beaded Necklace Handmade',seller:'Karongi Jewelers',price:42.00,cat:'Jewelry',stars:5,reviews:97,badge:'verified'},
+{id:24,img:'assets/prod_24.jpg',name:'Pure Pyrethrum Extract',seller:'Eastern Farms Coop',price:35.00,cat:'Agriculture',stars:4.5,reviews:61,badge:'verified'}
 ];
 
 const TESTIMONIALS=[
@@ -1075,25 +1106,56 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 
-// --- LOADER ---
+// --- PREMIUM LOADER ---
 function initLoader(){
   const pct=document.querySelector('#loader .pct');
+  const bar=document.querySelector('#loader .progress-bar');
+  const loader=document.getElementById('loader');
+  const pContainer=document.getElementById('pContainer');
+  
+  // High-end vocabulary
+  const statusMsgs = [
+    'Securing direct paths...',
+    'Curating artisan masterpieces...',
+    'Syncing with local cooperatives...',
+    'Bespoke craftsmanship incoming...',
+    'Unveiling the heart of the hills...'
+  ];
+  
+  // Particle generator
+  for(let i=0; i<35; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100 + '%';
+    p.style.top = Math.random()*100 + '%';
+    const size = Math.random()*2 + 1 + 'px';
+    p.style.width = size; p.style.height = size;
+    p.style.animationDelay = Math.random()*4 + 's';
+    p.style.animationDuration = Math.random()*3 + 3 + 's';
+    pContainer.appendChild(p);
+  }
+
   let p=0;
   const iv=setInterval(()=>{
-    p+=Math.random()*4+1;if(p>100)p=100;
-    pct.textContent=Math.floor(p)+'%';
+    p+=Math.random()*(p > 85 ? 1 : 8);
+    if(p>100)p=100;
+    
+    bar.style.width = p + '%';
+    const msgIdx = Math.min(Math.floor((p/100) * statusMsgs.length), statusMsgs.length - 1);
+    pct.textContent = statusMsgs[msgIdx] + ' ' + Math.floor(p) + '%';
+    
     if(p>=100){
       clearInterval(iv);
       setTimeout(()=>{
-        document.getElementById('loader').style.opacity='0';
+        loader.classList.add('exit');
         setTimeout(()=>{
-          document.getElementById('loader').style.display='none';
+          loader.classList.add('done');
           document.getElementById('cbarT').classList.add('hide-t');
           document.getElementById('cbarB').classList.add('hide-b');
-        },300);
-      },400);
+        }, 600);
+      }, 200);
     }
-  },50);
+  }, 30);
 }
 
 // --- KEYBOARD ---
